@@ -1,0 +1,7 @@
+var mentDoc = (function(){
+	
+	
+	return {
+    	
+	};
+}());
