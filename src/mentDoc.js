@@ -3,7 +3,7 @@ var mentDoc = (function(){
 	return {
 	    _getCommandsEl: function (containerEl) {
     	    return Array.prototype.slice.call(
-    	       containerEl.getElementsByTagName("u");
+    	       containerEl.getElementsByTagName("u")
     	    )
 	    },
     	compile: function (html) {
@@ -13,7 +13,7 @@ var mentDoc = (function(){
         	containerEl = document.createElement("div");    
         	containerEl.innerHTML = html;
         	
-        	commandsEl = this._getCommandsEl(holder);
+        	commandsEl = this._getCommandsEl(containerEl);
         	
         	forEach(commandsEl, function(el) {
             	var attrs = el.attributes;
