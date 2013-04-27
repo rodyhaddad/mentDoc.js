@@ -48,6 +48,12 @@ var mentDoc = (function(){
                 	this._loopThroughEl(el.childNodes);
             	}
         	}, this);
+    	},
+    	
+    	execute: function() {
+        	forEach(this.children, function(child) {
+            	child.execute();
+        	});
     	}
 	}
 	
@@ -55,19 +61,13 @@ var mentDoc = (function(){
 	    Command: Command,
 	    
     	compile: function(html) {
-        	var commandsEl, containerEl;
+        	var elRoot;
         	
-        	var tree = {};
+        	elRoot = document.createElement("u");    
+        	elRoot.innerHTML = html;
         	
-        	containerEl = document.createElement("u");    
-        	containerEl.innerHTML = html;
-        	
-        	console.log(new Command(containerEl));
-        	
-        	
+        	return new Command(elRoot);
     	},
-    	
-    	
     	
     	
     	forEach: forEach,
