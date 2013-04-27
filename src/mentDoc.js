@@ -1,30 +1,69 @@
 var mentDoc = (function(){
+	var mentDoc;
 	
-	return {
-	    _getCommandsEl: function (containerEl) {
-    	    return Array.prototype.slice.call(
-    	       containerEl.getElementsByTagName("u")
-    	    )
-	    },
-    	compile: function (html) {
+	function Command(el, parent) {
+    	this.el = el;
+    	this.parent = parent || null;
+    	this.attrs = {};
+    	this.children = [];
+    	
+    	this.refreshAttrs();
+    	this.updateChildren();
+	}
+	
+	Command.isCommandEl = function(el) {
+    	return (el.nodeType === 1 && el.nodeName === "U");
+	};
+	
+	Command.prototype = {
+    	constructor: Command,
+    	
+    	refreshAttrs: function() {
+        	var domAttrs = this.el.attributes,
+    	        attrs = {};
+        	
+        	forEach(domAttrs, function(attr) {
+            	if (attr.specified) {
+                	var name = attr.name,
+                	    value = this.el.getAttribute(name, 3);
+                	    
+                	attrs[name] = value;
+            	}
+        	}, this);
+        	
+        	this.attrs = attrs;
+    	},
+    	
+    	updateChildren: function() {
+        	this.children = [];
+        	this._loopThroughEl(this.el.childNodes);
+    	},
+    	_loopThroughEl: function(childNodes) {
+        	forEach(childNodes, function(el) {
+            	if(Command.isCommandEl(el)) {
+                	var childCommand = new Command(el, this);
+                	this.children.push(childCommand);
+                	childCommand.updateChildren();
+            	} else if (el.nodeType === 1) {
+                	this._loopThroughEl(el.childNodes);
+            	}
+        	}, this);
+    	}
+	}
+	
+	return mentDoc = {
+	    Command: Command,
+	    
+    	compile: function(html) {
         	var commandsEl, containerEl;
         	
+        	var tree = {};
         	
-        	containerEl = document.createElement("div");    
+        	containerEl = document.createElement("u");    
         	containerEl.innerHTML = html;
         	
-        	commandsEl = this._getCommandsEl(containerEl);
+        	console.log(new Command(containerEl));
         	
-        	forEach(commandsEl, function(el) {
-            	var attrs = el.attributes;
-            	
-            	forEach(attrs, function(attr) {
-                	if (attr.specified) {
-                    	var name = attr.name,
-                    	    value = el.getAttribute(name, 3);
-                	}
-            	});
-        	});
         	
     	},
     	
@@ -39,7 +78,8 @@ var mentDoc = (function(){
 	
 	function forEach(obj, iterator, context) {
         var key;
-        if(obj) {
+        if(obj && iterator) {
+            context = context || obj;
             if(isFn(obj)) {
                 for(key in obj) {
                     if(key != "prototype" && key != "length" && key != "name" && obj.hasOwnProperty(key)) {
