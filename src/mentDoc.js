@@ -1,22 +1,24 @@
 var mentDoc = (function(){
-	var mentDoc;
+	var mentDoc,
+	    registeredCommands = {};
 	
-	function Command(el, parent) {
+	function Commands(el, parent) {
     	this.el = el;
     	this.parent = parent || null;
     	this.attrs = {};
     	this.children = [];
+    	this.data = parent ? makeInherit(parent.data) : {};
     	
     	this.refreshAttrs();
     	this.updateChildren();
 	}
 	
-	Command.isCommandEl = function(el) {
+	Commands.isCommandsEl = function(el) {
     	return (el.nodeType === 1 && el.nodeName === "U");
 	};
 	
-	Command.prototype = {
-    	constructor: Command,
+	Commands.prototype = {
+    	constructor: Commands,
     	
     	refreshAttrs: function() {
         	var domAttrs = this.el.attributes,
@@ -27,7 +29,7 @@ var mentDoc = (function(){
                 	var name = attr.name,
                 	    value = this.el.getAttribute(name, 3);
                 	    
-                	attrs[name] = value;
+                	attrs[mentDoc.normalizeAttr(name)] = value;
             	}
         	}, this);
         	
@@ -40,10 +42,10 @@ var mentDoc = (function(){
     	},
     	_loopThroughEl: function(childNodes) {
         	forEach(childNodes, function(el) {
-            	if(Command.isCommandEl(el)) {
-                	var childCommand = new Command(el, this);
-                	this.children.push(childCommand);
-                	childCommand.updateChildren();
+            	if(Commands.isCommandsEl(el)) {
+                	var childCommands = new Commands(el, this);
+                	this.children.push(childCommands);
+                	childCommands.updateChildren();
             	} else if (el.nodeType === 1) {
                 	this._loopThroughEl(el.childNodes);
             	}
@@ -51,6 +53,14 @@ var mentDoc = (function(){
     	},
     	
     	execute: function() {
+        	forEach(this.attrs, function(value, name) {
+            	if (registeredCommands[name]) {
+                	registeredCommands[name](this.el, value, this);
+            	}
+        	}, this);
+        	this.executeChildren();
+    	},
+    	executeChildren: function() {
         	forEach(this.children, function(child) {
             	child.execute();
         	});
@@ -58,22 +68,46 @@ var mentDoc = (function(){
 	}
 	
 	return mentDoc = {
-	    Command: Command,
+	    Commands: Commands,
 	    
     	compile: function(html) {
         	var elRoot;
         	
-        	elRoot = document.createElement("u");    
+        	elRoot = document.createElement("u");
         	elRoot.innerHTML = html;
         	
-        	return new Command(elRoot);
+        	return new Commands(elRoot);
     	},
     	
+    	registeredCommands: registeredCommands,
+    	addCommand: function(name, info) {
+        	registeredCommands[name] = info;
+    	},
+    	
+    	//taken from angularjs
+    	normalizeAttr: (function(){
+    		var PREFIX_REGEXP = /^(x[\:\-_]|data[\:\-_])/i;
+    		var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+            var MOZ_HACK_REGEXP = /^moz([A-Z])/;
+            
+            function camelCase(name) {                	
+                return name.
+                    replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
+                        return offset ? letter.toUpperCase() : letter;
+                    }).replace(MOZ_HACK_REGEXP, 'Moz$1');
+            }
+            
+    		return function(name) {
+            	return camelCase(name.replace(PREFIX_REGEXP, ''));
+        	}
+    		
+    	}()),
     	
     	forEach: forEach,
     	isArray: isArray,
     	isObject: isObject,
-    	isFn: isFn
+    	isFn: isFn,
+    	makeInherit: makeInherit
 	};
 	
 	function forEach(obj, iterator, context) {
@@ -113,5 +147,31 @@ var mentDoc = (function(){
     function isFn(fn) {
         return typeof fn === "function";
     };
+    
+    function makeInherit(obj) {
+        if (Object.create) {
+            return Object.create(obj);
+        } else {
+            var o = function() {};
+            o.prototype = obj;
+            return new o;
+        }
+    }
 	
 }());
+
+mentDoc.addCommand("appendTo", function(el, value, commands) {
+    $(value, commands.data.inPage).append($(el).contents());
+});
+
+mentDoc.addCommand("empty", function(el, value, commands) {
+    $(value, commands.data.inPage).empty();
+});
+
+mentDoc.addCommand("remove", function(el, value, commands) {
+    $(value, commands.data.inPage).remove();
+});
+
+mentDoc.addCommand("inPage", function(el, value, commands) {
+    commands.data.inPage = value;
+});
