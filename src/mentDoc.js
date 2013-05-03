@@ -9,6 +9,8 @@ var mentDoc = (function(){
     	this.children = [];
     	this.data = parent ? makeInherit(parent.data) : {};
     	
+    	this.el.style.textDecoration = "none";
+    	
     	this.refreshAttrs();
     	this.updateChildren();
 	}
