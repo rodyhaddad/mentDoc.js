@@ -66,6 +66,10 @@ var mentDoc = (function(){
         	forEach(this.children, function(child) {
             	child.execute();
         	});
+    	},
+    	
+    	getElContent: function() {
+        	return this.el.innerHTML;
     	}
 	}
 	
@@ -163,7 +167,7 @@ var mentDoc = (function(){
 }());
 
 mentDoc.addCommand("appendTo", function(el, value, commands) {
-    $(value, commands.data.inPage).append($(el).contents());
+    $(value, commands.data.inPage).append(commands.getElContent());
 });
 
 mentDoc.addCommand("empty", function(el, value, commands) {
@@ -176,4 +180,32 @@ mentDoc.addCommand("remove", function(el, value, commands) {
 
 mentDoc.addCommand("inPage", function(el, value, commands) {
     commands.data.inPage = value;
+});
+
+
+
+mentDoc.addCommand("markdown", function(el, value, commands) {
+    var converter = Markdown.getSanitizingConverter();
+    
+    Markdown.Extra.init(converter, {extensions: "all", highlighter: "prettify"});
+    
+    var content = commands.getElContent();
+    var matches = content.match(/(\t| )+\^\^\^/g);
+
+    if (matches) {
+        var len = matches[0].length - 3;
+        lines = content.split(/\n/g);
+        for(var i = 0; i < lines.length; i++) {
+            lines[i] = lines[i].substring(len);
+            if (lines[i] === "^^^") {
+                lines[i] = "";
+            }
+        }
+        content = lines.join("\n")
+    }
+    
+    commands.data.compiledMarkdown =  converter.makeHtml(content);
+    commands.getElContent = function() {
+        return commands.data.compiledMarkdown;
+    }
 });

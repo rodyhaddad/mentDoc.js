@@ -7,23 +7,49 @@
     <body>
         <h1>mentDoc.js is included in this page, so you can open your console and have fun testing it :)</h1>
         <p>
-            Under this &lt;p> there is a &lt;div class="test-div"> with a &lt;h3> and a &lt;h4> inside it.<br />
-            A mentDoc is being compiled and executed, that empties the &lt;h3> and appends "WORKS!" to it as well as remove the &lt;h4> entirely.
-            
+            Under this paragraph there is a &lt;div class="test-div"> with a &lt;h3>, a &lt;h4> and a &lt;p> inside it.<br />
+            A mentDoc document is being compiled and executed.<br />
+            In it there are commands to empty the &lt;h3> and append "WORKS!" to it, as well as remove the &lt;h4> entirely.<br />
+            The &lt;p> is initially empty, but a command in the mentDoc document compiles some markdown and append it to the &lt;p>.
         </p>
         
         <div class="test-div">
             <h3>This should have been emptied</h3>
             <h4>This should have been removed</h4>
+            <p></p>
         </div>
         
         <script src="../src/mentDoc.js"></script>
+        
         <script src="./lib/jquery-2.0.0.min.js"></script>
-        <script type="template/mentDoc">
+        <script src="./lib/Markdown.Converter.js"></script>
+        <script src="./lib/Markdown.Sanitizer.js"></script>
+        <script src="./lib/Markdown.Extra.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+        
+        <script type="text/mentDoc">
         
             <u in-page=".test-div">
                 <u empty="h3" append-to="h3">
                     WORKS!
+                </u>
+                <u markdown append-to="p">
+                    ^^^
+                    This is the &lt;p>  
+                    awesome, this is a working example of mentDoc.js
+                    
+                    | Noraml    | Right | Center |
+                    | --------- | -----:|:--:    |
+                    | td1-1     | td1-2 | td1-3  |
+                    | td2-1     | td2-2 | td2-3  |
+                    
+                    ```js {.linenums}
+                    function test() {
+                        //alert("ten: " + 10);
+                        console.log("ten: ", 10)
+                    }
+                    
+                    ```
                 </u>
                 <u remove="h4"></u>
             </u>
@@ -31,7 +57,7 @@
         </script>
         <script>
             Array.prototype.slice.call(
-                document.querySelectorAll("script[type='template/mentDoc']")
+                document.querySelectorAll("script[type='text/mentDoc']")
             ).forEach(function(script) {
                 mentDoc.compile(script.innerHTML).execute();
             })
