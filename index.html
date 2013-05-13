@@ -3,7 +3,6 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
@@ -11,22 +10,113 @@
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>MentDoc.js by rodyhaddad</title>
   </head>
 
-  <body>
-    <div id="container">
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+  
+    <header class="hero-unit" id="main-header">
+        <div class="container">
+            <h1>
+                MentDoc.js
+            </h1>
+
+            <p>A library that allows third-party coders to augment the documentation of your project</p>
+
+            <p class="btn-group">
+                <a class="btn" href="https://raw.github.com/rodyhaddad/mentDoc.js/master/src/mentDoc.js">
+                    <i class="icon-file-alt"></i> Raw File
+                </a>
+                <a class="btn btn-primary" href="https://github.com/rodyhaddad/mentDoc.js"><i class="icon-github icon-white"></i> Code on Github</a>
+                <a class="btn" href="https://github.com/rodyhaddad/mentDoc.js/zipball/master"><i class="icon-download-alt"></i> Download zip</a>
+            </p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                <div class="bs-docs-sidebar">
+                    <ul class="nav nav-list bs-docs-sidenav"  data-spy="affix" data-offset-top="249">
+                        <li style="display: none"><a href="#main-header">Top</a></li>
+                        <li class="first"><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
+                        <li><a href="#usage-api"><i class="icon-chevron-right"></i> Usage API</a></li>
+                        <li><a href="#default-commands"><i class="icon-chevron-right"></i> Default Commands</a></li>
+                        <li class="last"><a href="#adding-custom-commands"><i class="icon-chevron-right"></i> Adding Your Custom Commands</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9 main-content">
+                <section id="overview">
+                    <div class="page-header">
+                        <h1>Overview</h1>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                </section>
+                <section id="usage-api">
+                    <div class="page-header">
+                        <h1>Usage API</h1>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                </section>
+                <section id="default-commands">
+                    <div class="page-header">
+                        <h1>Default Commands</h1>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                </section>
+                <section id="adding-custom-commands">
+                    <div class="page-header">
+                        <h1>Adding Your Custom Commands</h1>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    </p>
+                </section>
+            </div>            
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>
+            mentDoc.js is maintained by <a href="https://github.com/rodyhaddad">rodyhaddad</a>
+        </p>
+        <p>
+            Code licensed under <a href="https://github.com/rodyhaddad/mentDoc.js/blob/master/LICENSE">MIT License</a>.
+        </p>
+        <p>
+            Found a bug? Report it <a href="https://github.com/rodyhaddad/mentDoc.js/issues">here</a>
+        </p>
+    </footer>
+    <!--<div id="container">
       <div class="inner">
 
         <header>
           <h1>MentDoc.js</h1>
           <h2>A library that allows third-party coders to augment the documentation of your project</h2>
         </header>
-
+        
         <section id="downloads" class="clearfix">
           <a href="https://github.com/rodyhaddad/mentDoc.js/zipball/master" class="button first" id="dl-zip"><i class="icon-download-alt"></i> <span>Download .zip</span></a>
           <a href="https://raw.github.com/rodyhaddad/mentDoc.js/master/src/mentDoc.js" class="button" id="raw-file"><i class="icon-file-alt"></i> <span>Raw File</span></a>
@@ -34,9 +124,20 @@
         </section>
 
         <hr>
-
+        
+        <nav id="sidenav">
+            <ul class="nav nav-list bs-docs-sidenav" data-spy="affix" data-offset-top="120">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li><a href="#">Applications</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+        
         <section id="main_content">
-          <h2>Welcome to this page...</h2>
+            <h2>Welcome to this page...</h2>
         </section>
 
         <footer>
@@ -46,8 +147,9 @@
 
         
       </div>
-    </div>
+    </div>-->
     
+    <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
     
