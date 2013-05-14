@@ -46,6 +46,7 @@ var mentDoc = (function(){
 	Commands.prototype = {
     	constructor: Commands,
     	
+    	isRoot: false,
     	refreshAttrs: function() {
         	var domAttrs = this.el.attributes,
     	        attrs = {};
@@ -106,7 +107,10 @@ var mentDoc = (function(){
         	elRoot = document.createElement("u");
         	elRoot.innerHTML = html;
         	
-        	return new Commands(elRoot);
+        	var rootCommand = new Commands(elRoot);
+        	rootCommand.isRoot = true;
+        	
+        	return rootCommand;
     	},
     	
     	registeredCommands: registeredCommands,
