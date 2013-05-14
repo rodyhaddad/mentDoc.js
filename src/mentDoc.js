@@ -22,7 +22,7 @@
     THE SOFTWARE.
     
 */
-var mentDoc = (function(){
+var mentDoc = (function() {
 	var mentDoc,
 	    registeredCommands = {};
 	
