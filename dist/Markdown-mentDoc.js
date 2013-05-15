@@ -2453,7 +2453,7 @@ mentDoc.markdown = {
         var matches = markdown.match(/(\t| )+\^\^\^/g);
         if (matches) {
             var len = matches[0].length - 3;
-            lines = content.split(/\n/g);
+            lines = markdown.split(/\n/g);
             for(var i = 0; i < lines.length; i++) {
                 lines[i] = lines[i].substring(len); //remove indendation
                 
