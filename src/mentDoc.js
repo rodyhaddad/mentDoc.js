@@ -281,7 +281,7 @@ mentDoc.markdown = {
         
         return converter.makeHtml(markdown);
     }
-}
+};
 
 mentDoc.addCommand("markdown", {
     priority: "high",
