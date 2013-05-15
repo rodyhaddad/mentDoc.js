@@ -254,30 +254,41 @@ mentDoc.addCommand("remove", function(el, value, commands) {
 });
 
 
-
-mentDoc.addCommand("markdown", {
-    priority: "high",
-    execute: function(el, value, commands) {
+mentDoc.markdown = {
+    convertHtml: function(markdown) {
         var converter = Markdown.getSanitizingConverter();
         
         Markdown.Extra.init(converter, {extensions: "all", highlighter: "prettify"});
         
-        var content = commands.getElContent();
-        var matches = content.match(/(\t| )+\^\^\^/g);
-    
+        //we're looking for a `^^^` inside the markdown code
+        //if we find one, we want to shift all indentation
+        //to the left, so that the real indentation starts
+        //where the `^^^` starts
+        var matches = markdown.match(/(\t| )+\^\^\^/g);
         if (matches) {
             var len = matches[0].length - 3;
             lines = content.split(/\n/g);
             for(var i = 0; i < lines.length; i++) {
-                lines[i] = lines[i].substring(len);
+                lines[i] = lines[i].substring(len); //remove indendation
+                
+                //we don't want `^^^` in the end result
                 if (lines[i] === "^^^") {
                     lines[i] = "";
                 }
             }
-            content = lines.join("\n");
-        }
+            markdown = lines.join("\n");
+        } 
         
-        commands.data.compiledMarkdown = converter.makeHtml(content);
+        return converter.makeHtml(markdown);
+    }
+}
+
+mentDoc.addCommand("markdown", {
+    priority: "high",
+    execute: function(el, value, commands) {
+        commands.data.compiledMarkdown = mentDoc.markdown.convertHtml(
+            commands.getElContent()
+        );
         commands.getElContent = function() {
             return commands.data.compiledMarkdown;
         };
