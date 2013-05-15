@@ -1,30 +1,31 @@
 /*
-    The MIT License (MIT)
+The MIT License (MIT)
 
-    Copyright (c) 2013 rodyhaddad
+Copyright (c) 2013 rodyhaddad
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is furnished
-    to do so, subject to the following conditions:
-    
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-    
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 */
+
 var mentDoc = (function() {
 	var mentDoc,
-	    registeredCommands = {};
+	    registeredCommands = {},
+	    DOM_ELEMENT = 1; // nodeType
 	
 	function Commands(el, parent) {
     	this.el = el;
@@ -40,7 +41,7 @@ var mentDoc = (function() {
 	}
 	
 	Commands.isCommandsEl = function(el) {
-    	return (el.nodeType === 1 && el.nodeName === "U");
+    	return (el.nodeType === DOM_ELEMENT && el.nodeName === "U");
 	};
 	
 	Commands.prototype = {
@@ -48,24 +49,25 @@ var mentDoc = (function() {
     	
     	isRoot: false,
     	refreshAttrs: function() {
-        	var domAttrs = this.el.attributes,
-    	        attrs = {};
+            this.attrs = {};
         	
-        	forEach(domAttrs, function(attr) {
+        	forEach(this.el.attributes, function(attr) {
             	if (attr.specified) {
                 	var name = attr.name,
-                	    value = this.el.getAttribute(name, 3);
+                	    value = this.el.getAttribute(name, 3); // 3: IE, case-sensitive and String
                 	    
-                	attrs[mentDoc.normalizeAttr(name)] = value;
+                	this.attrs[mentDoc.normalizeAttr(name)] = value;
             	}
         	}, this);
         	
-        	this.attrs = attrs;
+        	return this;
     	},
     	
     	updateChildren: function() {
         	this.children = [];
         	this._loopThroughEl(this.el.childNodes);
+        	
+        	return this;
     	},
     	_loopThroughEl: function(childNodes) {
         	forEach(childNodes, function(el) {
@@ -73,10 +75,12 @@ var mentDoc = (function() {
                 	var childCommands = new Commands(el, this);
                 	this.children.push(childCommands);
                 	childCommands.updateChildren();
-            	} else if (el.nodeType === 1) {
+            	} else if (el.nodeType === DOM_ELEMENT) {
                 	this._loopThroughEl(el.childNodes);
             	}
         	}, this);
+        	
+        	return this;
     	},
     	
     	execute: function() {
@@ -86,11 +90,15 @@ var mentDoc = (function() {
             	}
         	}, this);
         	this.executeChildren();
+        	
+        	return this;
     	},
     	executeChildren: function() {
         	forEach(this.children, function(child) {
             	child.execute();
         	});
+        	
+        	return this;
     	},
     	
     	getElContent: function() {
@@ -107,10 +115,10 @@ var mentDoc = (function() {
         	elRoot = document.createElement("u");
         	elRoot.innerHTML = html;
         	
-        	var rootCommand = new Commands(elRoot);
-        	rootCommand.isRoot = true;
+        	var root = new Commands(elRoot);
+        	root.isRoot = true;
         	
-        	return rootCommand;
+        	return root;
     	},
     	
     	registeredCommands: registeredCommands,
@@ -119,7 +127,8 @@ var mentDoc = (function() {
     	},
     	
     	//taken from angularjs
-    	normalizeAttr: (function(){
+    	//convert `data-a-b` and `x-a-b` and `a-b` to aB
+    	normalizeAttr: (function() {
     		var PREFIX_REGEXP = /^(x[\:\-_]|data[\:\-_])/i;
     		var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
             var MOZ_HACK_REGEXP = /^moz([A-Z])/;
@@ -144,13 +153,15 @@ var mentDoc = (function() {
     	makeInherit: makeInherit
 	};
 	
+	//obj can be an Object/Array/Function
 	function forEach(obj, iterator, context) {
         var key;
         if(obj && iterator) {
             context = context || obj;
             if(isFn(obj)) {
                 for(key in obj) {
-                    if(key != "prototype" && key != "length" && key != "name" && obj.hasOwnProperty(key)) {
+                    if(key != "prototype" && key != "length" 
+                        && key != "name" && obj.hasOwnProperty(key)) {
                         iterator.call(context, obj[key], key);
                     }
                 }
@@ -194,20 +205,20 @@ var mentDoc = (function() {
 	
 }());
 
+mentDoc.addCommand("inEl", function(el, value, commands) {
+    commands.data.inEl = value;
+});
+
 mentDoc.addCommand("appendTo", function(el, value, commands) {
-    $(value, commands.data.inPage).append(commands.getElContent());
+    $(value, commands.data.inEl).append(commands.getElContent());
 });
 
 mentDoc.addCommand("empty", function(el, value, commands) {
-    $(value, commands.data.inPage).empty();
+    $(value, commands.data.inEl).empty();
 });
 
 mentDoc.addCommand("remove", function(el, value, commands) {
-    $(value, commands.data.inPage).remove();
-});
-
-mentDoc.addCommand("inPage", function(el, value, commands) {
-    commands.data.inPage = value;
+    $(value, commands.data.inEl).remove();
 });
 
 
