@@ -84,11 +84,11 @@ var mentDoc = (function() {
     	},
     	
     	execute: function() {
-        	forEach(this.attrs, function(value, name) {
-            	if (registeredCommands[name]) {
-                	registeredCommands[name](this.el, value, this);
-            	}
+    	    
+        	forEach(this._sortedCommands(), function(commandName) {
+            	registeredCommands[commandName].execute(this.el, this.attrs[commandName], this);
         	}, this);
+        	
         	this.executeChildren();
         	
         	return this;
@@ -99,6 +99,19 @@ var mentDoc = (function() {
         	});
         	
         	return this;
+    	},
+    	
+    	_sortedCommands: function() {
+        	var commands = [];
+        	forEach(this.attrs, function(value, name) {
+            	if (registeredCommands[name]) {
+                	commands.push(name);
+            	}
+        	}, this);
+        	
+        	return commands.sort(function(a, b) {
+            	return registeredCommands[a].priority - registeredCommands[b].priority
+        	});
     	},
     	
     	getElContent: function() {
@@ -121,8 +134,26 @@ var mentDoc = (function() {
         	return root;
     	},
     	
+    	priority: {
+        	"high": 10,
+        	"medium": 20,
+        	"low": 30,
+        	"default": 30
+    	},
     	registeredCommands: registeredCommands,
     	addCommand: function(name, info) {
+    	    if (typeof info === "function") {
+        	    info = {execute: info};
+    	    }
+    	    
+    	    if (!info.priority) {
+        	    info.priority = this.priority["default"];
+    	    } else if (typeof info.priority === "string") {
+        	    info.priority = this.priority[info.priority];
+    	    } else if(isNaN(info.priority)) {
+        	    throw "Unknown priority given : " + info.priority;
+    	    }
+    	    
         	registeredCommands[name] = info;
     	},
     	
@@ -223,28 +254,31 @@ mentDoc.addCommand("remove", function(el, value, commands) {
 
 
 
-mentDoc.addCommand("markdown", function(el, value, commands) {
-    var converter = Markdown.getSanitizingConverter();
+mentDoc.addCommand("markdown", {
+    priority: "high",
+    execute: function(el, value, commands) {
+        var converter = Markdown.getSanitizingConverter();
+        
+        Markdown.Extra.init(converter, {extensions: "all", highlighter: "prettify"});
+        
+        var content = commands.getElContent();
+        var matches = content.match(/(\t| )+\^\^\^/g);
     
-    Markdown.Extra.init(converter, {extensions: "all", highlighter: "prettify"});
-    
-    var content = commands.getElContent();
-    var matches = content.match(/(\t| )+\^\^\^/g);
-
-    if (matches) {
-        var len = matches[0].length - 3;
-        lines = content.split(/\n/g);
-        for(var i = 0; i < lines.length; i++) {
-            lines[i] = lines[i].substring(len);
-            if (lines[i] === "^^^") {
-                lines[i] = "";
+        if (matches) {
+            var len = matches[0].length - 3;
+            lines = content.split(/\n/g);
+            for(var i = 0; i < lines.length; i++) {
+                lines[i] = lines[i].substring(len);
+                if (lines[i] === "^^^") {
+                    lines[i] = "";
+                }
             }
+            content = lines.join("\n")
         }
-        content = lines.join("\n")
-    }
-    
-    commands.data.compiledMarkdown =  converter.makeHtml(content);
-    commands.getElContent = function() {
-        return commands.data.compiledMarkdown;
+        
+        commands.data.compiledMarkdown = converter.makeHtml(content);
+        commands.getElContent = function() {
+            return commands.data.compiledMarkdown;
+        }
     }
 });
