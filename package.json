@@ -1,0 +1,21 @@
+{
+  "name": "mentDoc.js",
+  "version": "0.1.0",
+  "description": "A library that allows third-party coders to augment the documentation of your project",
+  "main": "src/mentDoc.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodyhaddad/mentDoc.js.git"
+  },
+  "keywords": [
+    "documentation", "dynamic", "mentDoc", "augment"
+  ],
+  "author": "rodyhaddad",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-concat": "~0.3.0"
+  }
+}
