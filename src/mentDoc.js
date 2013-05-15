@@ -23,169 +23,169 @@ THE SOFTWARE.
 */
 
 var mentDoc = (function() {
-	var mentDoc,
-	    registeredCommands = {},
-	    DOM_ELEMENT = 1; // nodeType
-	
-	function Commands(el, parent) {
-    	this.el = el;
-    	this.parent = parent || null;
-    	this.attrs = {};
-    	this.children = [];
-    	this.data = parent ? makeInherit(parent.data) : {};
-    	
-    	this.el.style.textDecoration = "none";
-    	
-    	this.refreshAttrs();
-    	this.updateChildren();
-	}
-	
-	Commands.isCommandsEl = function(el) {
-    	return (el.nodeType === DOM_ELEMENT && el.nodeName === "U");
-	};
-	
-	Commands.prototype = {
-    	constructor: Commands,
-    	
-    	isRoot: false,
-    	refreshAttrs: function() {
+    var mentDoc,
+        registeredCommands = {},
+        DOM_ELEMENT = 1; // nodeType
+    
+    function Commands(el, parent) {
+        this.el = el;
+        this.parent = parent || null;
+        this.attrs = {};
+        this.children = [];
+        this.data = parent ? makeInherit(parent.data) : {};
+        
+        this.el.style.textDecoration = "none";
+        
+        this.refreshAttrs();
+        this.updateChildren();
+    }
+    
+    Commands.isCommandsEl = function(el) {
+        return (el.nodeType === DOM_ELEMENT && el.nodeName === "U");
+    };
+    
+    Commands.prototype = {
+        constructor: Commands,
+        
+        isRoot: false,
+        refreshAttrs: function() {
             this.attrs = {};
-        	
-        	forEach(this.el.attributes, function(attr) {
-            	if (attr.specified) {
-                	var name = attr.name,
-                	    value = this.el.getAttribute(name, 3); // 3: IE, case-sensitive and String
-                	    
-                	this.attrs[mentDoc.normalizeAttr(name)] = value;
-            	}
-        	}, this);
-        	
-        	return this;
-    	},
-    	
-    	updateChildren: function() {
-        	this.children = [];
-        	this._loopThroughEl(this.el.childNodes);
-        	
-        	return this;
-    	},
-    	_loopThroughEl: function(childNodes) {
-        	forEach(childNodes, function(el) {
-            	if(Commands.isCommandsEl(el)) {
-                	var childCommands = new Commands(el, this);
-                	this.children.push(childCommands);
-                	childCommands.updateChildren();
-            	} else if (el.nodeType === DOM_ELEMENT) {
-                	this._loopThroughEl(el.childNodes);
-            	}
-        	}, this);
-        	
-        	return this;
-    	},
-    	
-    	execute: function() {
-    	    
-        	forEach(this._sortedCommands(), function(commandName) {
-            	registeredCommands[commandName].execute(this.el, this.attrs[commandName], this);
-        	}, this);
-        	
-        	this.executeChildren();
-        	
-        	return this;
-    	},
-    	executeChildren: function() {
-        	forEach(this.children, function(child) {
-            	child.execute();
-        	});
-        	
-        	return this;
-    	},
-    	
-    	_sortedCommands: function() {
-        	var commands = [];
-        	forEach(this.attrs, function(value, name) {
-            	if (registeredCommands[name]) {
-                	commands.push(name);
-            	}
-        	}, this);
-        	
-        	return commands.sort(function(a, b) {
-            	return registeredCommands[a].priority - registeredCommands[b].priority
-        	});
-    	},
-    	
-    	getElContent: function() {
-        	return this.el.innerHTML;
-    	}
-	}
-	
-	return mentDoc = {
-	    Commands: Commands,
-	    
-    	compile: function(html) {
-        	var elRoot;
-        	
-        	elRoot = document.createElement("u");
-        	elRoot.innerHTML = html;
-        	
-        	var root = new Commands(elRoot);
-        	root.isRoot = true;
-        	
-        	return root;
-    	},
-    	
-    	priority: {
-        	"high": 10,
-        	"medium": 20,
-        	"low": 30,
-        	"default": 30
-    	},
-    	registeredCommands: registeredCommands,
-    	addCommand: function(name, info) {
-    	    if (typeof info === "function") {
-        	    info = {execute: info};
-    	    }
-    	    
-    	    if (!info.priority) {
-        	    info.priority = this.priority["default"];
-    	    } else if (typeof info.priority === "string") {
-        	    info.priority = this.priority[info.priority];
-    	    } else if(isNaN(info.priority)) {
-        	    throw "Unknown priority given : " + info.priority;
-    	    }
-    	    
-        	registeredCommands[name] = info;
-    	},
-    	
-    	//taken from angularjs
-    	//convert `data-a-b` and `x-a-b` and `a-b` to aB
-    	normalizeAttr: (function() {
-    		var PREFIX_REGEXP = /^(x[\:\-_]|data[\:\-_])/i;
-    		var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+            
+            forEach(this.el.attributes, function(attr) {
+                if (attr.specified) {
+                    var name = attr.name,
+                        value = this.el.getAttribute(name, 3); // 3: IE, case-sensitive and String
+                        
+                    this.attrs[mentDoc.normalizeAttr(name)] = value;
+                }
+            }, this);
+            
+            return this;
+        },
+        
+        updateChildren: function() {
+            this.children = [];
+            this._loopThroughEl(this.el.childNodes);
+            
+            return this;
+        },
+        _loopThroughEl: function(childNodes) {
+            forEach(childNodes, function(el) {
+                if(Commands.isCommandsEl(el)) {
+                    var childCommands = new Commands(el, this);
+                    this.children.push(childCommands);
+                    childCommands.updateChildren();
+                } else if (el.nodeType === DOM_ELEMENT) {
+                    this._loopThroughEl(el.childNodes);
+                }
+            }, this);
+            
+            return this;
+        },
+        
+        execute: function() {
+            
+            forEach(this._sortedCommands(), function(commandName) {
+                registeredCommands[commandName].execute(this.el, this.attrs[commandName], this);
+            }, this);
+            
+            this.executeChildren();
+            
+            return this;
+        },
+        executeChildren: function() {
+            forEach(this.children, function(child) {
+                child.execute();
+            });
+            
+            return this;
+        },
+        
+        _sortedCommands: function() {
+            var commands = [];
+            forEach(this.attrs, function(value, name) {
+                if (registeredCommands[name]) {
+                    commands.push(name);
+                }
+            }, this);
+            
+            return commands.sort(function(a, b) {
+                return registeredCommands[a].priority - registeredCommands[b].priority
+            });
+        },
+        
+        getElContent: function() {
+            return this.el.innerHTML;
+        }
+    }
+    
+    return mentDoc = {
+        Commands: Commands,
+        
+        compile: function(html) {
+            var elRoot;
+            
+            elRoot = document.createElement("u");
+            elRoot.innerHTML = html;
+            
+            var root = new Commands(elRoot);
+            root.isRoot = true;
+            
+            return root;
+        },
+        
+        priority: {
+            "high": 10,
+            "medium": 20,
+            "low": 30,
+            "default": 30
+        },
+        registeredCommands: registeredCommands,
+        addCommand: function(name, info) {
+            if (typeof info === "function") {
+                info = {execute: info};
+            }
+            
+            if (!info.priority) {
+                info.priority = this.priority["default"];
+            } else if (typeof info.priority === "string") {
+                info.priority = this.priority[info.priority];
+            } else if(isNaN(info.priority)) {
+                throw "Unknown priority given : " + info.priority;
+            }
+            
+            registeredCommands[name] = info;
+        },
+        
+        //taken from angularjs
+        //convert `data-a-b` and `x-a-b` and `a-b` to aB
+        normalizeAttr: (function() {
+            var PREFIX_REGEXP = /^(x[\:\-_]|data[\:\-_])/i;
+            var SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
             var MOZ_HACK_REGEXP = /^moz([A-Z])/;
             
-            function camelCase(name) {                	
+            function camelCase(name) {                  
                 return name.
                     replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
                         return offset ? letter.toUpperCase() : letter;
                     }).replace(MOZ_HACK_REGEXP, 'Moz$1');
             }
             
-    		return function(name) {
-            	return camelCase(name.replace(PREFIX_REGEXP, ''));
-        	}
-    		
-    	}()),
-    	
-    	forEach: forEach,
-    	isArray: isArray,
-    	isObject: isObject,
-    	isFn: isFn,
-    	makeInherit: makeInherit
-	};
-	
-	//obj can be an Object/Array/Function
-	function forEach(obj, iterator, context) {
+            return function(name) {
+                return camelCase(name.replace(PREFIX_REGEXP, ''));
+            }
+            
+        }()),
+        
+        forEach: forEach,
+        isArray: isArray,
+        isObject: isObject,
+        isFn: isFn,
+        makeInherit: makeInherit
+    };
+    
+    //obj can be an Object/Array/Function
+    function forEach(obj, iterator, context) {
         var key;
         if(obj && iterator) {
             context = context || obj;
@@ -233,7 +233,7 @@ var mentDoc = (function() {
             return new o;
         }
     }
-	
+    
 }());
 
 mentDoc.addCommand("inEl", function(el, value, commands) {
