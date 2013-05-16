@@ -54,20 +54,20 @@
                     <div class="page-header">
                         <h1>Overview</h1>
                     </div>
-                    <p class="markdown">
+                    <p class="markdown2">
                         ^^^
                         This is a javascript library which aims at improving your project's documentation.  
                         
                         If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of your plugins in one place.  
                         This will make navigating your plugins' docs much easier, since they would be all on the same site.
                     </p>
-                    <p class="markdown">
+                    <p class="markdown2">
                         ^^^
                         `mentDoc.js` allows you to `compile` some html and then `execute` it.  
                         The html can have `commands` in it, defined as attributes, which can manipulate the page they're being executed in.   
                     </p>
                     <div class="bs-docs-example">
-                        <p class="markdown">
+                        <p class="markdown2">
                             ^^^
                             ```html
                                 <!-- in your page -->
@@ -93,9 +93,30 @@
                     </div>
                     <p class="markdown">
                         ^^^
-                        `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.
+                        `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
+                        
+                        
+                        
+                        ## mentDoc
+                        
+                        
                         
                         ###>`mentDoc.compile( html )`
+                        
+                        **Parameters** :   
+                        
+                        *  {String} - The `html` to parse and extract `commands` of.
+                        
+                        **Returns** :   
+                        
+                        *  {Command} - a root `Command` that you can execute.
+                        
+                        
+                        
+                        ##Command
+                        
+                        ###>`Command.execute()`
+                        
                     </p>
                     
                 </section>
