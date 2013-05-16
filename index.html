@@ -54,20 +54,20 @@
                     <div class="page-header">
                         <h1>Overview</h1>
                     </div>
-                    <p class="markdown2">
+                    <p class="markdown">
                         ^^^
                         This is a javascript library which aims at improving your project's documentation.  
                         
                         If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of your plugins in one place.  
                         This will make navigating your plugins' docs much easier, since they would be all on the same site.
                     </p>
-                    <p class="markdown2">
+                    <p class="markdown">
                         ^^^
                         `mentDoc.js` allows you to `compile` some html and then `execute` it.  
                         The html can have `commands` in it, defined as attributes, which can manipulate the page they're being executed in.   
                     </p>
                     <div class="bs-docs-example">
-                        <p class="markdown2">
+                        <p class="markdown">
                             ^^^
                             ```html
                                 <!-- in your page -->
@@ -95,27 +95,45 @@
                         ^^^
                         `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
                         
-                        
-                        
+                        <!-- 
+                            mentDoc Object docs
+                        -->
                         ## mentDoc
-                        
-                        
                         
                         ###>`mentDoc.compile( html )`
                         
-                        **Parameters** :   
+                        Using this method, you can compile some `html`, which will return you a `Command` object.  
+                        You can then execute that `Command` object as many times as you want.
                         
+                        ##### Usage:
+                        ```js
+                            var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                        ```
+                        
+                        ##### Parameters :   
                         *  {String} - The `html` to parse and extract `commands` of.
                         
-                        **Returns** :   
-                        
+                        ##### Returns :   
                         *  {Command} - a root `Command` that you can execute.
                         
+                        ###>`other`
+                        A list of all other properties/methods on the `mentDoc` object, if you're curious:
+                          
+                        *  {Object} `mentDoc.regDirectives` - an object holding all registered directives (key: name => value: directiveInfo)
+                        *  {Function} `mentDoc.addDirective(name, info) - a method that allows you to add custom directives, more details in the [Adding Your Custom Commands](#adding-custom-commands) section
                         
+                        - - - 
+                        
+                        <!-- 
+                            Command Class docs
+                        -->
                         
                         ##Command
                         
                         ###>`Command.execute()`
+                        
+                        
+                        
                         
                     </p>
                     
@@ -161,7 +179,7 @@
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://raw.github.com/rodyhaddad/mentDoc.js/master/dist/Markdown-mentDoc.js"></script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sunburst"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     <script src="js/main.js"></script>
     
   </body>
