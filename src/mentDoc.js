@@ -24,10 +24,10 @@ THE SOFTWARE.
 
 var mentDoc = (function() {
     var mentDoc,
-        registeredCommands = {},
+        regDirectives = {}, //registered directives
         DOM_ELEMENT = 1; // nodeType
     
-    function Commands(el, parent) {
+    function Command(el, parent) {
         this.el = el;
         this.parent = parent || null;
         this.attrs = {};
@@ -40,12 +40,12 @@ var mentDoc = (function() {
         this.updateChildren();
     }
     
-    Commands.isCommandsEl = function(el) {
+    Command.isCommandEl = function(el) {
         return (el.nodeType === DOM_ELEMENT && el.nodeName === "U");
     };
     
-    Commands.prototype = {
-        constructor: Commands,
+    Command.prototype = {
+        constructor: Command,
         
         isRoot: false,
         refreshAttrs: function() {
@@ -54,7 +54,7 @@ var mentDoc = (function() {
             forEach(this.el.attributes, function(attr) {
                 if (attr.specified) {
                     var name = attr.name,
-                        value = this.el.getAttribute(name, 3); // 3: IE, case-sensitive and String
+                        value = this.el.getAttribute(name, 3); // 3: IE, case-sens. and String
                         
                     this.attrs[mentDoc.normalizeAttr(name)] = value;
                 }
@@ -71,10 +71,10 @@ var mentDoc = (function() {
         },
         _loopThroughEl: function(childNodes) {
             forEach(childNodes, function(el) {
-                if(Commands.isCommandsEl(el)) {
-                    var childCommands = new Commands(el, this);
-                    this.children.push(childCommands);
-                    childCommands.updateChildren();
+                if(Command.isCommandEl(el)) {
+                    var childCommand = new Command(el, this);
+                    this.children.push(childCommand);
+                    childCommand.updateChildren();
                 } else if (el.nodeType === DOM_ELEMENT) {
                     this._loopThroughEl(el.childNodes);
                 }
@@ -84,9 +84,8 @@ var mentDoc = (function() {
         },
         
         execute: function() {
-            
-            forEach(this._sortedCommands(), function(commandName) {
-                registeredCommands[commandName].execute(this.el, this.attrs[commandName], this);
+            forEach(this._sortedDirectives(), function(commandName) {
+                regDirectives[commandName].execute(this.el, this.attrs[commandName], this);
             }, this);
             
             this.executeChildren();
@@ -101,16 +100,16 @@ var mentDoc = (function() {
             return this;
         },
         
-        _sortedCommands: function() {
-            var commands = [];
+        _sortedDirectives: function() {
+            var directives = [];
             forEach(this.attrs, function(value, name) {
-                if (registeredCommands[name]) {
-                    commands.push(name);
+                if (regDirectives[name]) {
+                    directives.push(name);
                 }
             }, this);
             
-            return commands.sort(function(a, b) {
-                return registeredCommands[a].priority - registeredCommands[b].priority;
+            return directives.sort(function(a, b) {
+                return regDirectives[a].priority - regDirectives[b].priority;
             });
         },
         
@@ -120,7 +119,7 @@ var mentDoc = (function() {
     };
     
     mentDoc = {
-        Commands: Commands,
+        Command: Command,
         
         compile: function(html) {
             var elRoot;
@@ -128,33 +127,39 @@ var mentDoc = (function() {
             elRoot = document.createElement("u");
             elRoot.innerHTML = html;
             
-            var root = new Commands(elRoot);
+            var root = new Command(elRoot);
             root.isRoot = true;
             
             return root;
         },
         
-        priority: {
+        priorityAlias: {
             "high": 10,
             "medium": 20,
             "low": 30,
             "default": 30
         },
-        registeredCommands: registeredCommands,
-        addCommand: function(name, info) {
+        regDirectives: regDirectives,
+        addDirective: function(name, info) {
             if (typeof info === "function") {
                 info = {execute: info};
             }
             
             if (!info.priority) {
-                info.priority = this.priority["default"];
+                info.priority = this.priorityAlias["default"];
             } else if (typeof info.priority === "string") {
-                info.priority = this.priority[info.priority];
-            } else if(isNaN(info.priority)) {
-                throw "Unknown priority given : " + info.priority;
+                info.priority = this.priorityAlias[info.priority];
             }
             
-            registeredCommands[name] = info;
+            if (isNaN(info.priority)) {
+                throw "Unknown priority given for directive `" + name + "` : " + info.priority;
+            }
+            
+            if (!isFn(info.execute)) {
+                throw "No execute function was given for directive : " + name;
+            }
+            
+            regDirectives[name] = info;
         },
         
         //taken from angularjs
@@ -237,20 +242,23 @@ var mentDoc = (function() {
     return mentDoc;
 }());
 
-mentDoc.addCommand("inEl", function(el, value, commands) {
-    commands.data.inEl = value;
+mentDoc.addDirective("inEl", function(el, value, command) {
+    command.data.inEl = value;
 });
 
-mentDoc.addCommand("appendTo", function(el, value, commands) {
-    $(value, commands.data.inEl).append(commands.getElContent());
+mentDoc.addDirective("appendTo", function(el, value, command) {
+    $(value, command.data.inEl).append(command.getElContent());
 });
 
-mentDoc.addCommand("empty", function(el, value, commands) {
-    $(value, commands.data.inEl).empty();
+mentDoc.addDirective("empty", {
+    priority: "medium",
+    execute: function(el, value, command) {
+        $(value, command.data.inEl).empty();
+    }
 });
 
-mentDoc.addCommand("remove", function(el, value, commands) {
-    $(value, commands.data.inEl).remove();
+mentDoc.addDirective("remove", function(el, value, command) {
+    $(value, command.data.inEl).remove();
 });
 
 
@@ -283,14 +291,14 @@ mentDoc.markdown = {
     }
 };
 
-mentDoc.addCommand("markdown", {
+mentDoc.addDirective("markdown", {
     priority: "high",
-    execute: function(el, value, commands) {
-        commands.data.compiledMarkdown = mentDoc.markdown.convertHtml(
-            commands.getElContent()
+    execute: function(el, value, command) {
+        command.data.compiledMarkdown = mentDoc.markdown.convertHtml(
+            command.getElContent()
         );
-        commands.getElContent = function() {
-            return commands.data.compiledMarkdown;
+        command.getElContent = function() {
+            return command.data.compiledMarkdown;
         };
     }
 });
