@@ -54,23 +54,50 @@
                     <div class="page-header">
                         <h1>Overview</h1>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <p class="markdown">
+                        ^^^
+                        This is a javascript library which aims at improving your project's documentation.  
+                        
+                        If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of your plugins in one place.  
+                        This will make navigating your plugins' docs much easier, since they would be all on the same site.
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <p class="markdown">
+                        ^^^
+                        `mentDoc.js` allows you to `compile` some html and then `execute` it.  
+                        The html can have `commands` in it, defined as attributes, which can manipulate the page they're being executed in.   
                     </p>
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <!-- in your page -->
+                                <span class="example1">Test: </span>
+                                
+                                <!-- plugin's docs -->
+                                <u append-to=".example1">
+                                   This will be appended to ".example1" once executed
+                                </u>
+                            ```
+                        </p>
+                        <span class="badge badge-info">This is a live demo</span> <span class="example1">Test: </span>
+                        <div class="mentDoc">
+                            <u append-to=".example1">
+                               This will be appended to ".example1" once executed
+                            </u>
+                        </div>
+                    </div>
                 </section>
                 <section id="usage-api">
                     <div class="page-header">
                         <h1>Usage API</h1>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <p class="markdown">
+                        ^^^
+                        `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.
+                        
+                        ###>`mentDoc.compile( html )`
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                    </p>
+                    
                 </section>
                 <section id="default-commands">
                     <div class="page-header">
@@ -109,49 +136,13 @@
             Found a bug? Report it <a href="https://github.com/rodyhaddad/mentDoc.js/issues">here</a>
         </p>
     </footer>
-    <!--<div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>MentDoc.js</h1>
-          <h2>A library that allows third-party coders to augment the documentation of your project</h2>
-        </header>
-        
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/rodyhaddad/mentDoc.js/zipball/master" class="button first" id="dl-zip"><i class="icon-download-alt"></i> <span>Download .zip</span></a>
-          <a href="https://raw.github.com/rodyhaddad/mentDoc.js/master/src/mentDoc.js" class="button" id="raw-file"><i class="icon-file-alt"></i> <span>Raw File</span></a>
-          <a href="https://github.com/rodyhaddad/mentDoc.js" class="button last"><i class="icon-github" id="view-github"></i> <span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-        
-        <nav id="sidenav">
-            <ul class="nav nav-list bs-docs-sidenav" data-spy="affix" data-offset-top="120">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Library</a></li>
-                <li><a href="#">Applications</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Help</a></li>
-            </ul>
-        </nav>
-        
-        <section id="main_content">
-            <h2>Welcome to this page...</h2>
-        </section>
-
-        <footer>
-            This project is maintained by <a href="https://github.com/rodyhaddad">rodyhaddad</a><br>
-            Found a bug? Report it <a href="https://github.com/rodyhaddad/mentDoc.js/issues">here</a><br/>
-        </footer>
-
-        
-      </div>
-    </div>-->
     
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="https://raw.github.com/rodyhaddad/mentDoc.js/master/dist/Markdown-mentDoc.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sunburst"></script>
     <script src="js/main.js"></script>
     
   </body>
 </html>
+            
