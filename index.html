@@ -159,13 +159,55 @@
                         
                         ###>`.el`
                         
-                        The DOM element that this `Command` instance represents.
+                        The `DOM` element that this `Command` instance represents.
                         
                         ###>`.parent`
                         
                         The parent `Command` of the current `Command`.  
                         
-                        <span class="badge badge-info">Note</span> This is NOT the DOM parent, but the `Command` parent, independently of how many DOM parents seperate them.
+                        <span class="badge">Note</span> This is NOT the `DOM parentNode`, but the parent `Command`: Independently of how many `DOM parentNodes` separate them.
+                        
+                        ###>`.attrs`
+                        
+                        A normalized list of the attributes specified on the `.el`.  
+                        Any `data-` or `x-` is removed from the attribute name, and is transformed to camelCase.  
+                        The `key` is the attribute `name`, and the `value` is the attribute `value`.
+                        
+                        ##### Usage:
+                        ```js
+                            aCommand.attrs["appendTo"] === "body";
+                        ```
+                        
+                        ###>`.children`
+                        
+                        An array of child `Commands`.
+                        
+                        <span class="badge">Note</span> This is NOT the `DOM childNodes`, but the child `Commands`: Independently of how many `DOM childNodes` separate them.
+                        
+                        ###>`.data`
+                        
+                        An object in which directives can store any data they want.
+                        
+                        <span class="badge">Note</span> `.data` prototypically inherits from `.parent.data`, so anything set on the parent's `.data` will be accessible from child `Commands`.
+                        
+                        ###>`.getElContent()`
+                        
+                        A function that returns the content of the `DOM element`.
+                        
+                        <span class="badge">Note</span> You should use this instead of `.innerHTML` in your custom directives. This allows other directives like `markdown` to overwrite the content of an element.
+                        
+                        
+                        ###>`other` {.api-command-other}
+                        A list of all other properties/methods on the `Command` object and its instances, if you're curious:
+                        
+                        *  `.isRoot – a boolean indicating whether this `Command` is a root command or not
+                        *  `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
+                        *  `.updateChildren()` – refreshes the `.children` array. Called by the constructor
+                        *  `.executeChildren()` – executes the child `Commands`. Called by `.execute`
+                        *  `._loopThroughEl()` – Used by `.updateChildren()` to iterate through `childNodes`
+                        *  `._sortedDirectives()` – Used by `.execute()` to get a list of directives sorted by their priority
+                        
+                        
                         
                     </p>
                     
