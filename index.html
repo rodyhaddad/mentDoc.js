@@ -44,8 +44,8 @@
                         <li style="display: none"><a href="#main-header">Top</a></li>
                         <li class="first"><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
                         <li><a href="#usage-api"><i class="icon-chevron-right"></i> Usage API</a></li>
-                        <li><a href="#default-commands"><i class="icon-chevron-right"></i> Default Commands</a></li>
-                        <li class="last"><a href="#adding-custom-commands"><i class="icon-chevron-right"></i> Adding Your Custom Commands</a></li>
+                        <li><a href="#default-directives"><i class="icon-chevron-right"></i> Default Directives</a></li>
+                        <li class="last"><a href="#adding-custom-directives"><i class="icon-chevron-right"></i> Adding Your Custom Directives</a></li>
                     </ul>
                 </div>
             </div>
@@ -110,37 +110,69 @@
                             var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
                         ```
                         
-                        ##### Parameters :   
-                        *  {String} - The `html` to parse and extract `commands` of.
+                        ##### Parameters:   
+                        *  html – {String} – The `html` to parse and extract `commands` of.
                         
-                        ##### Returns :   
-                        *  {Command} - a root `Command` that you can execute.
+                        ##### Returns:   
+                        *  {Command} – a root `Command` that you can execute.
                         
-                        ###>`other`
+                        
+                        ###>`other` {.api-mentdoc-other}
                         A list of all other properties/methods on the `mentDoc` object, if you're curious:
                           
-                        *  {Object} `mentDoc.regDirectives` - an object holding all registered directives (key: name => value: directiveInfo)
-                        *  {Function} `mentDoc.addDirective(name, info) - a method that allows you to add custom directives, more details in the [Adding Your Custom Commands](#adding-custom-commands) section
+                        *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Commands](#adding-custom-directives) section
+                        *  `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns `someAttr`.
+                        *  `.Command(el, parent)` – the `Command` class
+                        *  `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
+                        *  `.isArray(obj)` – returns whether `obj` is an array
+                        *  `.isObject(obj)` – returns whether `obj` is an object. Doesn't include `null`
+                        *  `.isFn(fn)` – returns whether `fn` is a function
+                        *  `.makeInherit(obj)` – same thing as ES5's `Object.create(obj)`
+                        *  `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
+                        *  `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
                         
                         - - - 
                         
                         <!-- 
                             Command Class docs
                         -->
-                        
                         ##Command
                         
-                        ###>`Command.execute()`
+                        `Command` is a class which represents a `u` element.  
+                        
+                        When some `html` is being compiled, each time a `u` element is encountered a new `Command` instance is created.  
                         
                         
+                        ###>`.execute()`
                         
+                        Executes the directives that were set on the `u` element, as well as any child `Command`
+                        
+                        ##### Usage:
+                        ```js
+                            var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                            rootCommand.execute(); //this will append the text above to the body
+                        ```
+                        
+                        ##### Returns:   
+                        *  {Command} – itself, for chaining.
+                        
+                        
+                        ###>`.el`
+                        
+                        The DOM element that this `Command` instance represents.
+                        
+                        ###>`.parent`
+                        
+                        The parent `Command` of the current `Command`.  
+                        
+                        <span class="badge badge-info">Note</span> This is NOT the DOM parent, but the `Command` parent, independently of how many DOM parents seperate them.
                         
                     </p>
                     
                 </section>
-                <section id="default-commands">
+                <section id="default-directives">
                     <div class="page-header">
-                        <h1>Default Commands</h1>
+                        <h1>Default Directives</h1>
                     </div>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
@@ -149,9 +181,9 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
                     </p>
                 </section>
-                <section id="adding-custom-commands">
+                <section id="adding-custom-directives">
                     <div class="page-header">
-                        <h1>Adding Your Custom Commands</h1>
+                        <h1>Adding Your Custom Directives</h1>
                     </div>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.

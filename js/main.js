@@ -2,7 +2,6 @@ $(".markdown").each(function() {
     var content = $(this).html(),
         html = mentDoc.markdown.convertHtml(content);
     
-    
     $(this).empty().html(html);
 })
 
