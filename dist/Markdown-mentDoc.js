@@ -2080,6 +2080,7 @@ else
 //two patched by rodyhhaddad:
 //  added h4,h5,h6 to `basic_tag_whitelist`
 //  allowed for a link to start by `#`
+//  allowed `class` attributes on `span` and `i`
 (function () {
     var output, Converter;
     if (typeof exports === "object" && typeof require === "function") { // we're in a CommonJS (e.g. Node.js) module
@@ -2102,15 +2103,19 @@ else
     }
 
     // (tags that can be opened/closed) | (tags that stand alone)
-    var basic_tag_whitelist = /^(<\/?(b|blockquote|code|del|dd|dl|dt|em|h1|h2|h3|h4|h5|h6|i|kbd|li|ol|p|pre|s|sup|sub|strong|strike|ul)>|<(br|hr)\s?\/?>)$/i;
+    var basic_tag_whitelist = /^(<\/?(b|blockquote|code|del|dd|dl|dt|em|h1|h2|h3|h4|h5|h6|i|kbd|li|ol|p|pre|s|sup|sub|strong|strike|ul|span)>|<(br|hr)\s?\/?>)$/i;
     // <a href="url..." optional title>|</a>
-    var a_white = /^(<a\shref="(((https?|ftp|):\/\/|\/)|#)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?\s?>|<\/a>)$/i;
+    var a_white = /^(<a\shref="(((https?|ftp):\/\/|\/)|#)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\stitle="[^"<>]+")?\s?>|<\/a>)$/i;
 
     // <img src="url..." optional width  optional height  optional alt  optional title
     var img_white = /^(<img\ssrc="(https?:\/\/|\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+"(\swidth="\d{1,3}")?(\sheight="\d{1,3}")?(\salt="[^"<>]*")?(\stitle="[^"<>]*")?\s?\/?>)$/i;
 
+    //<span class="test-ing works"></span> or <i>
+    var span_icon_white = /^(<(span|i)\sclass="([-A-Za-z ]+)")\s?(>(.*)|()<\/(span|i)>)$/i;
+
+
     function sanitizeTag(tag) {
-        if (tag.match(basic_tag_whitelist) || tag.match(a_white) || tag.match(img_white))
+        if (tag.match(basic_tag_whitelist) || tag.match(a_white) || tag.match(img_white) || tag.match(span_icon_white))
             return tag;
         else
             return "";
