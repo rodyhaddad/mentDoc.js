@@ -1,0 +1,16 @@
+{
+  "name": "mentDoc.site.js",
+  "version": "0.0.0",
+  "description": "The website of mentDoc.js",
+  "main": "index.html",
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-curl": "~1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodyhaddad/mentDoc.js.git"
+  },
+  "author": "rodyhaddad",
+  "license": "MIT"
+}
