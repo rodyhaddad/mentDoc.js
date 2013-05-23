@@ -94,7 +94,9 @@
                     <p class="markdown">
                         ^^^
                         `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
-                        
+                    </p>
+                    <p class="markdown api-mentdoc">
+                        ^^^
                         <!-- 
                             mentDoc Object docs
                         -->
@@ -117,10 +119,10 @@
                         *  {Command} – a root `Command` that you can execute.
                         
                         
-                        ###>`other` {.api-mentdoc-other}
+                        ###>`other`
                         A list of all other properties/methods on the `mentDoc` object, if you're curious:
                           
-                        *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Commands](#adding-custom-directives) section
+                        *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Directives](#adding-custom-directives) section
                         *  `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns `someAttr`.
                         *  `.Command(el, parent)` – the `Command` class
                         *  `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
@@ -131,8 +133,10 @@
                         *  `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
                         *  `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
                         
-                        - - - 
-                        
+                        - - -
+                    </p>
+                    <p class="markdown api-command">
+                        ^^^
                         <!-- 
                             Command Class docs
                         -->
@@ -197,7 +201,7 @@
                         <span class="badge">Note</span> You should use this instead of `.innerHTML` in your custom directives. This allows other directives like `markdown` to overwrite the content of an element.
                         
                         
-                        ###>`other` {.api-command-other}
+                        ###>`other`
                         A list of all other properties/methods on the `Command` object and its instances, if you're curious:
                         
                         *  `.isRoot` – a boolean indicating whether this `Command` is a root command or not
@@ -216,12 +220,127 @@
                     <div class="page-header">
                         <h1>Default Directives</h1>
                     </div>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <!-- in-el -->
+                    <p class="markdown">
+                        ^^^
+                        Here is a list of the directives that are bundled in `mentDoc.js` by default. You can always overwrite them or add your own if you want to, simply read the [Adding Your Custom Directives](#adding-custom-directives) section to know how.  
+                        
+                        ###>`in-el="{selector}"`
+                        
+                        Using the `in-el` directive, you can specify the context of all DOM manipulations that occur inside the element.
                     </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dui metus, rhoncus eu venenatis non, accumsan non lacus. Donec porttitor tincidunt lacus, sit amet fringilla ante consectetur vehicula. Curabitur quam urna, auctor in tempus dignissim, condimentum a velit. Vestibulum aliquet tempus nulla nec sagittis. Vivamus ut ipsum turpis, nec feugiat purus. Aliquam nec quam libero. Nunc ornare laoreet rutrum. Curabitur a urna est, ac volutpat velit. Ut suscipit est elit. Nulla facilisi. Etiam vel fringilla eros. Mauris orci mauris, tristique ac feugiat sed, mattis vitae est. Aliquam fermentum tincidunt justo, eu congue odio venenatis sit amet. Integer vel nibh nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <u in-el=".article"> <!-- Set the scope -->
+                                    <!-- the folowing text will only be appended to the all a[href] inside .article -->
+                                    <u append-to="a[href]">
+                                        [external]
+                                    </u>
+                                </u>
+                                <!-- while the following <span> will be appended to all nav elements in the page -->
+                                <u append-to="nav">
+                                    <span class="clearfix"></span>
+                                </u>
+                            ```
+                        </p>
+                    </div>
+                    <!-- append-to -->
+                    <p class="markdown">
+                        ^^^
+                        ###>`append-to="{selector}"`
+                        
+                        Using the `append-to` directive, you can appended content to elements in the page.  
+                        You may specify the scope using the `in-el` directive.
                     </p>
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <!-- The <span class="clearfix"> will be append to all <nav> elements in the page -->
+                                <u append-to="nav">
+                                    <span class="clearfix"></span>
+                                </u>
+                            ```
+                        </p>
+                    </div>
+                    <!-- empty -->
+                    <p class="markdown">
+                        ^^^
+                        ###>`empty="{selector}"`
+                        
+                        Using the `empty` directive, you can empty the content of elements on the page.  
+                        You may specify the scope using the `in-el` directive.
+                    </p>
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <!-- this will empty all <p> in the .article on the page -->
+                                <u empty=".article p"></u>
+                            ```
+                        </p>
+                    </div>
+                    <!-- remove -->
+                    <p class="markdown">
+                        ^^^
+                        ###>`remove="{selector}"`
+                        
+                        Using the `remove` directive, you can remove elements from the page.  
+                        You may specify the scope using the `in-el` directive.
+                    </p>
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <!-- this will remove all <ul> in the #menu form the page -->
+                                <u remove="#menu ul"></u>
+                            ```
+                        </p>
+                    </div>
+                    <!-- markdown -->
+                    <p class="markdown">
+                        ^^^
+                        ###>`markdown`
+                        
+                        Using the `markdown` directive, you can write `markdown` instead of `html` for your docs.  
+                        
+                        This directives uses [PageDown](https://code.google.com/p/pagedown/) to convert `markdown` to `html`  
+                        It also uses [PageDown's Sanitizer](https://code.google.com/p/pagedown/source/browse/Markdown.Sanitizer.js),
+                        as well as [PageDown Extra](https://github.com/jmcmanus/pagedown-extra) for awesome goodness.  
+                        It also assumes you have [Google Code Prettify](https://code.google.com/p/google-code-prettify/) if you ever
+                        want to use \`\`\` for code blocks in your `markdown`  
+                        
+                        Since having indentation in `markdown` forces the text to be interpreted as code,
+                        a new `markdown` feature is added by this directive.  
+                        If a `^^^` is found in your `markdown`, all the indentation will be shifted to the left, as to make the indentation start
+                        where the `^^^` starts.
+                        The `^^^` is removed from the final result.
+                    </p>
+                    <div class="bs-docs-example">
+                        <p class="markdown">
+                            ^^^
+                            ```html
+                                <u markdown append-to=".docs">
+                                    ^^^
+                                    ## This wouldn't become an h2 if it weren't for the ^^^ above
+                                    
+                                    The ^^^ make the indentation start
+                                    RIGHT HERE
+                                    even though in the source code it's written after 9 level of indentation
+                                </u>
+                                
+                            ```
+                        </p>
+                    </div>
+                    <div class="mentDoc">
+                        <u in-el=".api-mentdoc">
+                            <ul you append-to="ul">
+                                <li>`.markdown.convertHtml(markdown)`</li>
+                            </ul>
+                        </u>
+                    </div>
                 </section>
                 <section id="adding-custom-directives">
                     <div class="page-header">
