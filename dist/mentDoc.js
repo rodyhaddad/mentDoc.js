@@ -1,4 +1,6 @@
-/*
+/*! mentDoc.js v0.3.0 23-05-2013 MIT LICENSE */
+
+/*!
 The MIT License (MIT)
 
 Copyright (c) 2013 rodyhaddad
@@ -21,8 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
-var mentDoc = (function() {
+;var mentDoc = (function() {
     var mentDoc,
         regDirectives = {}, //registered directives
         DOM_ELEMENT = 1; // nodeType
@@ -41,7 +42,9 @@ var mentDoc = (function() {
     }
     
     Command.isCommandEl = function(el) {
-        return (el.nodeType === DOM_ELEMENT && el.nodeName === "U");
+        return (el.nodeType === DOM_ELEMENT && 
+                    ( el.nodeName === "U" || el.getAttribute("you") !== null )
+               );
     };
     
     Command.prototype = {
