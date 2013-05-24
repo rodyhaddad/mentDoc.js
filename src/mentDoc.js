@@ -37,7 +37,7 @@ var mentDoc = (function() {
                         
                     this.attrs[normAttr] = value;
                     
-                    if (regDirectives[normAttr] && isFn(regDirectives[normAttr].encounter) {
+                    if (regDirectives[normAttr] && isFn(regDirectives[normAttr].encounter)) {
                         regDirectives[normAttr].encounter(this.el, value, this);
                     }
                 }
