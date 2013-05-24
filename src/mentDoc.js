@@ -55,9 +55,9 @@ var mentDoc = (function() {
         _loopThroughEl: function(childNodes) {
             forEach(childNodes, function(el) {
                 if(Command.isCommandEl(el)) {
-                    var childCommand = new Command(el, this);
-                    this.children.push(childCommand);
-                    childCommand.updateChildren();
+                    this.children.push(
+                        new Command(el, this)
+                    );
                 } else if (el.nodeType === DOM_ELEMENT) {
                     this._loopThroughEl(el.childNodes);
                 }
@@ -275,14 +275,9 @@ mentDoc.markdown = {
 mentDoc.addDirective("markdown", {
     priority: "high",
     encounter: function(el, value, command) {
-        command.getElContent = function() {
-            if (!command.data.hasOwnProperty("compiledMarkdown")) {
-                command.data.compiledMarkdown = mentDoc.markdown.convertHtml(
-                    command.getElContent()
-                );
-            }
-            return command.data.compiledMarkdown;
-        };
+        el.innerHTML = mentDoc.markdown.convertHtml(
+            el.innerHTML
+        );
     }
 });
 
