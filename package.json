@@ -1,6 +1,6 @@
 {
   "name": "mentDoc.js",
-  "version": "0.5.2",
+  "version": "0.6.2",
   "description": "A library that allows third-party coders to augment the documentation of your project",
   "main": "src/mentDoc.js",
   "repository": {

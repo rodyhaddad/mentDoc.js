@@ -1,4 +1,4 @@
-/*! mentDoc.js v0.5.2 24-05-2013 
+/*! mentDoc.js v0.6.2 24-05-2013 
 The MIT License (MIT)
 
 Copyright (c) 2013 rodyhaddad
