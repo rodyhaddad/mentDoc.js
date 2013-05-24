@@ -140,10 +140,6 @@ var mentDoc = (function() {
                 throw "Unknown priority given for directive `" + name + "` : " + info.priority;
             }
             
-            if (!isFn(info.execute)) {
-                throw "No execute function was given for directive : " + name;
-            }
-            
             regDirectives[name] = info;
         },
         
