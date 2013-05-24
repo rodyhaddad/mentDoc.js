@@ -2457,29 +2457,24 @@ mentDoc.addDirective("remove", function(el, value, command) {
 
 mentDoc.markdown = {
     convertHtml: function(markdown) {
-        var converter = Markdown.getSanitizingConverter();
+        var converter = Markdown.getSanitizingConverter(),
+            lines = markdown.split(/\n/g),
+            foundIndentLength = null;
+
+        for(var i = 0; i < lines.length; i++) {
+            if (foundIndentLength === null) {
+                var matches = lines[i].match(/^(\s*)\S.*/);
+                if (matches) {
+                    foundIndentLength = matches[1].length;
+                }
+            } 
+            if (foundIndentLength !== null) {
+                lines[i] = lines[i].substring(foundIndentLength); //remove indentation
+            }
+        }
+        markdown = lines.join("\n");
         
         Markdown.Extra.init(converter, {extensions: "all", highlighter: "prettify"});
-        
-        //we're looking for a `^^^` inside the markdown code
-        //if we find one, we want to shift all indentation
-        //to the left, so that the real indentation starts
-        //where the `^^^` starts
-        var matches = markdown.match(/(\t| )+\^\^\^/g);
-        if (matches) {
-            var len = matches[0].length - 3;
-            lines = markdown.split(/\n/g);
-            for(var i = 0; i < lines.length; i++) {
-                lines[i] = lines[i].substring(len); //remove indendation
-                
-                //we don't want `^^^` in the end result
-                if (lines[i] === "^^^") {
-                    lines[i] = "";
-                }
-            }
-            markdown = lines.join("\n");
-        } 
-        
         return converter.makeHtml(markdown);
     }
 };
