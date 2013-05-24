@@ -1,4 +1,4 @@
-/*! mentDoc.js v0.4.2 24-05-2013 
+/*! mentDoc.js v0.5.2 24-05-2013 
 The MIT License (MIT)
 
 Copyright (c) 2013 rodyhaddad
@@ -123,10 +123,6 @@ var mentDoc = (function() {
             return directives.sort(function(a, b) {
                 return regDirectives[a].priority - regDirectives[b].priority;
             });
-        },
-        
-        getElContent: function() {
-            return this.el.innerHTML;
         }
     };
     
@@ -255,7 +251,7 @@ mentDoc.addDirective("inEl", function(el, value, command) {
 });
 
 mentDoc.addDirective("appendTo", function(el, value, command) {
-    $(value, command.data.inEl).append(command.getElContent());
+    $(value, command.data.inEl).append(el.innerHTML);
 });
 
 mentDoc.addDirective("empty", {
