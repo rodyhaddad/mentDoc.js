@@ -3,28 +3,22 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         destName: 'mentDoc',
-        
+        LICENSE: grunt.file.read("LICENSE"),
         concat: {
             options: {
                 separator: ';',
-                banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> MIT LICENSE */\n',
-                process: function(src, filepath) {
-                    if (filepath === "LICENSE") {
-                        return "\n/*!\n" + src + "\n*/\n";
-                    }
-                    return src;
-                }
+                banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> \n<%= LICENSE %>\n*/\n\n',
             },
             dist: {
                 files: {
-                    'dist/<%= destName %>.js': ['LICENSE', 'src/*.js'],
-                    'dist/Markdown-<%= destName %>.js': ['LICENSE', 'lib/Markdown.*.js', 'src/*.js']
+                    'dist/<%= destName %>.js': ['src/*.js'],
+                    'dist/Markdown-<%= destName %>.js': ['lib/Markdown.*.js', 'src/*.js']
                 }
             }
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("dd-mm-yyyy") %> MIT LICENSE */\n',
+                preserveComments: 'some' //Licences
             },
             dist: {
                 files: {

@@ -1,6 +1,4 @@
-/*! mentDoc.js v0.4.1 23-05-2013 MIT LICENSE */
-
-/*!
+/*! mentDoc.js v0.4.2 24-05-2013 
 The MIT License (MIT)
 
 Copyright (c) 2013 rodyhaddad
@@ -23,7 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-;var mentDoc = (function() {
+
+/*!
+file: mentDoc.js
+*/
+var mentDoc = (function() {
     var mentDoc,
         regDirectives = {}, //registered directives
         DOM_ELEMENT = 1; // nodeType

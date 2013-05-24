@@ -1,3 +1,6 @@
+/*!
+file: mentDoc.js
+*/
 var mentDoc = (function() {
     var mentDoc,
         regDirectives = {}, //registered directives
