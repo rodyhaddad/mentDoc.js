@@ -99,10 +99,6 @@ var mentDoc = (function() {
             return directives.sort(function(a, b) {
                 return regDirectives[a].priority - regDirectives[b].priority;
             });
-        },
-        
-        getElContent: function() {
-            return this.el.innerHTML;
         }
     };
     
@@ -231,7 +227,7 @@ mentDoc.addDirective("inEl", function(el, value, command) {
 });
 
 mentDoc.addDirective("appendTo", function(el, value, command) {
-    $(value, command.data.inEl).append(command.getElContent());
+    $(value, command.data.inEl).append(el.innerHTML);
 });
 
 mentDoc.addDirective("empty", {
