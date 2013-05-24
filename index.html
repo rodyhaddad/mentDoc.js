@@ -95,126 +95,147 @@
                         ^^^
                         `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
                     </p>
-                    <p class="markdown api-mentdoc">
-                        ^^^
-                        <!-- 
-                            mentDoc Object docs
-                        -->
-                        ## mentDoc
-                        
-                        ###>`mentDoc.compile( html )`
-                        
-                        Using this method, you can compile some `html`, which will return you a `Command` object.  
-                        You can then execute that `Command` object as many times as you want.
-                        
-                        ##### Usage:
-                        ```js
-                            var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
-                        ```
-                        
-                        ##### Parameters:   
-                        *  html – {String} – The `html` to parse and extract `commands` of.
-                        
-                        ##### Returns:   
-                        *  {Command} – a root `Command` that you can execute.
-                        
-                        
-                        ###>`other`
-                        A list of all other properties/methods on the `mentDoc` object, if you're curious:
-                          
-                        *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Directives](#adding-custom-directives) section
-                        *  `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns `someAttr`.
-                        *  `.Command(el, parent)` – the `Command` class
-                        *  `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
-                        *  `.isArray(obj)` – returns whether `obj` is an array
-                        *  `.isObject(obj)` – returns whether `obj` is an object. Doesn't include `null`
-                        *  `.isFn(fn)` – returns whether `fn` is a function
-                        *  `.makeInherit(obj)` – same thing as ES5's `Object.create(obj)`
-                        *  `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
-                        *  `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
-                        
-                        - - -
-                    </p>
-                    <p class="markdown api-command">
-                        ^^^
-                        <!-- 
-                            Command Class docs
-                        -->
-                        ##Command
-                        
-                        `Command` is a class which represents a `u` element.  
-                        
-                        When some `html` is being compiled, each time a `u` element is encountered a new `Command` instance is created.  
-                        
-                        
-                        ###>`.execute()`
-                        
-                        Executes the directives that were set on the `u` element, as well as any child `Command`
-                        
-                        ##### Usage:
-                        ```js
-                            var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
-                            rootCommand.execute(); //this will append the text above to the body
-                        ```
-                        
-                        ##### Returns:   
-                        *  {Command} – itself, for chaining.
-                        
-                        
-                        ###>`.el`
-                        
-                        The `DOM` element that this `Command` instance represents.
-                        
-                        ###>`.parent`
-                        
-                        The parent `Command` of the current `Command`.  
-                        
-                        <span class="badge">Note</span> This is NOT the `DOM parentNode`, but the parent `Command`: Independently of how many `DOM parentNodes` separate them.
-                        
-                        ###>`.attrs`
-                        
-                        A normalized list of the attributes specified on the `.el`.  
-                        Any `data-` or `x-` is removed from the attribute name, and is transformed to camelCase.  
-                        The `key` is the attribute `name`, and the `value` is the attribute `value`.
-                        
-                        ##### Usage:
-                        ```js
-                            aCommand.attrs["appendTo"] === "body";
-                        ```
-                        
-                        ###>`.children`
-                        
-                        An array of child `Commands`.
-                        
-                        <span class="badge">Note</span> This is NOT the `DOM childNodes`, but the child `Commands`: Independently of how many `DOM childNodes` separate them.
-                        
-                        ###>`.data`
-                        
-                        An object in which directives can store any data they want.
-                        
-                        <span class="badge">Note</span> `.data` prototypically inherits from `.parent.data`, so anything set on the parent's `.data` will be accessible from child `Commands`.
-                        
-                        ###>`.getElContent()`
-                        
-                        A function that returns the content of the `DOM element`.
-                        
-                        <span class="badge">Note</span> You should use this instead of `.innerHTML` in your custom directives. This allows other directives like `markdown` to overwrite the content of an element.
-                        
-                        
-                        ###>`other`
-                        A list of all other properties/methods on the `Command` object and its instances, if you're curious:
-                        
-                        *  `.isRoot` – a boolean indicating whether this `Command` is a root command or not
-                        *  `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
-                        *  `.updateChildren()` – refreshes the `.children` array. Called by the constructor
-                        *  `.executeChildren()` – executes the child `Commands`. Called by `.execute`
-                        *  `._loopThroughEl()` – Used by `.updateChildren()` to iterate through `childNodes`
-                        *  `._sortedDirectives()` – Used by `.execute()` to get a list of directives sorted by their priority
-                        
-                        
-                        
-                    </p>
-                    
+                    <section class=".api-mentdoc">
+                        <p class="markdown">
+                            ^^^
+                            <!-- 
+                                mentDoc Object docs
+                            -->
+                            ## mentDoc
+                            
+                            ###>`mentDoc.compile( html )`
+                            
+                            Using this method, you can compile some `html`, which will return you a `Command` object.  
+                            You can then execute that `Command` object as many times as you want.
+                            
+                        </p>
+                        <div class="bs-docs-example">
+                            <p class="markdown">
+                            ^^^
+                            ```js
+                                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                            ```
+                            </p>
+                        </div>
+                        <p class="markdown">
+                            ^^^
+                            ##### Parameters:   
+                            *  html – {String} – The `html` to parse and extract `commands` of.
+                            
+                            ##### Returns:   
+                            *  {Command} – a root `Command` that you can execute.
+                            
+                            
+                            ###>`other`
+                            A list of all other properties/methods on the `mentDoc` object, if you're curious:
+                              
+                            *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Directives](#adding-custom-directives) section
+                            *  `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns `someAttr`.
+                            *  `.Command(el, parent)` – the `Command` class
+                            *  `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
+                            *  `.isArray(obj)` – returns whether `obj` is an array
+                            *  `.isObject(obj)` – returns whether `obj` is an object. Doesn't include `null`
+                            *  `.isFn(fn)` – returns whether `fn` is a function
+                            *  `.makeInherit(obj)` – same thing as ES5's `Object.create(obj)`
+                            *  `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
+                            *  `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
+                            
+                            - - -
+                        </p>
+                    </section>
+                    <section class="api-command">
+                        <p class="markdown">
+                            ^^^
+                            <!-- 
+                                Command Class docs
+                            -->
+                            ##Command
+                            
+                            `Command` is a class which represents a `u` element.  
+                            
+                            When some `html` is being compiled, each time a `u` element is encountered a new `Command` instance is created.  
+                            
+                            
+                            ###>`.execute()`
+                            
+                            Executes the directives that were set on the `u` element, as well as any child `Command`
+                            
+                        </p>
+                        <div class="bs-docs-example">
+                            <p class="markdown">
+                            ^^^
+                            ```js
+                                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                                rootCommand.execute(); //this will append the text above to the body
+                            ```
+                            </p>
+                        </div>
+                        <p class="markdown">
+                            ^^^
+                            ##### Returns:   
+                            *  {Command} – itself, for chaining.
+                            
+                            
+                            ###>`.el`
+                            
+                            The `DOM` element that this `Command` instance represents.
+                            
+                            ###>`.parent`
+                            
+                            The parent `Command` of the current `Command`.  
+                            
+                            <span class="badge">Note</span> This is NOT the `DOM parentNode`, but the parent `Command`: Independently of how many `DOM parentNodes` separate them.
+                            
+                            ###>`.attrs`
+                            
+                            A normalized list of the attributes specified on the `.el`.  
+                            Any `data-` or `x-` is removed from the attribute name, and is transformed to camelCase.  
+                            The `key` is the attribute `name`, and the `value` is the attribute `value`.
+                            
+                        </p>
+                        <div class="bs-docs-example">
+                            <p class="markdown">
+                            ^^^
+                            ```js
+                                aCommand.attrs["appendTo"] === "body";
+                            ```
+                            </p>
+                        </div>
+                        <p class="markdown">
+                            ^^^
+                            ###>`.children`
+                            
+                            An array of child `Commands`.
+                            
+                            <span class="badge">Note</span> This is NOT the `DOM childNodes`, but the child `Commands`: Independently of how many `DOM childNodes` separate them.
+                            
+                            ###>`.data`
+                            
+                            An object in which directives can store any data they want.
+                            
+                            <span class="badge">Note</span> `.data` prototypically inherits from `.parent.data`, so anything set on the parent's `.data` will be accessible from child `Commands`.
+                            
+                            ###>`.getElContent()`
+                            
+                            A function that returns the content of the `DOM element`.
+                            
+                            <span class="badge">Note</span> You should use this instead of `.innerHTML` in your custom directives. This allows other directives like `markdown` to overwrite the content of an element.
+                            
+                            
+                            ###>`other`
+                            A list of all other properties/methods on the `Command` object and its instances, if you're curious:
+                            
+                            *  `.isRoot` – a boolean indicating whether this `Command` is a root command or not
+                            *  `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
+                            *  `.updateChildren()` – refreshes the `.children` array. Called by the constructor
+                            *  `.executeChildren()` – executes the child `Commands`. Called by `.execute`
+                            *  `._loopThroughEl()` – Used by `.updateChildren()` to iterate through `childNodes`
+                            *  `._sortedDirectives()` – Used by `.execute()` to get a list of directives sorted by their priority
+                            
+                            
+                            
+                        </p>
+                    </section>
                 </section>
                 <section id="default-directives">
                     <div class="page-header">
@@ -372,7 +393,7 @@
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/Markdown-mentDoc.min.js"></script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
     <script src="js/main.js"></script>
     
   </body>
