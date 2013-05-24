@@ -272,10 +272,12 @@ mentDoc.markdown = {
 mentDoc.addDirective("markdown", {
     priority: "high",
     execute: function(el, value, command) {
-        command.data.compiledMarkdown = mentDoc.markdown.convertHtml(
-            command.getElContent()
-        );
         command.getElContent = function() {
+            if (!command.data.hasOwnProperty("compiledMarkdown")) {
+                command.data.compiledMarkdown = mentDoc.markdown.convertHtml(
+                    command.getElContent()
+                );
+            }
             return command.data.compiledMarkdown;
         };
     }
