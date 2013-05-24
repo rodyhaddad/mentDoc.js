@@ -55,20 +55,17 @@
                         <h1>Overview</h1>
                     </div>
                     <p class="markdown">
-                        ^^^
                         This is a javascript library which aims at improving your project's documentation.  
                         
                         If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of your plugins in one place.  
                         This will make navigating your plugins' docs much easier, since they would be all on the same site.
                     </p>
                     <p class="markdown">
-                        ^^^
                         `mentDoc.js` allows you to `compile` some html and then `execute` it.  
                         The html can have `commands` in it, defined as attributes, which can manipulate the page they're being executed in.   
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <!-- in your page -->
                                 <span class="example1">Test: </span>
@@ -92,12 +89,10 @@
                         <h1>Usage API</h1>
                     </div>
                     <p class="markdown">
-                        ^^^
                         `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
                     </p>
                     <section class=".api-mentdoc">
                         <p class="markdown">
-                            ^^^
                             <!-- 
                                 mentDoc Object docs
                             -->
@@ -111,14 +106,12 @@
                         </p>
                         <div class="bs-docs-example">
                             <p class="markdown">
-                            ^^^
                             ```js
                                 var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
                             ```
                             </p>
                         </div>
                         <p class="markdown">
-                            ^^^
                             ##### Parameters:   
                             *  html – {String} – The `html` to parse and extract `commands` of.
                             
@@ -145,7 +138,6 @@
                     </section>
                     <section class="api-command">
                         <p class="markdown">
-                            ^^^
                             <!-- 
                                 Command Class docs
                             -->
@@ -163,7 +155,6 @@
                         </p>
                         <div class="bs-docs-example">
                             <p class="markdown">
-                            ^^^
                             ```js
                                 var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
                                 rootCommand.execute(); //this will append the text above to the body
@@ -171,7 +162,6 @@
                             </p>
                         </div>
                         <p class="markdown">
-                            ^^^
                             ##### Returns:   
                             *  {Command} – itself, for chaining.
                             
@@ -195,14 +185,12 @@
                         </p>
                         <div class="bs-docs-example">
                             <p class="markdown">
-                            ^^^
                             ```js
                                 aCommand.attrs["appendTo"] === "body";
                             ```
                             </p>
                         </div>
                         <p class="markdown">
-                            ^^^
                             ###>`.children`
                             
                             An array of child `Commands`.
@@ -236,7 +224,6 @@
                     </div>
                     <!-- in-el -->
                     <p class="markdown">
-                        ^^^
                         Here is a list of the directives that are bundled in `mentDoc.js` by default. You can always overwrite them or add your own if you want to, simply read the [Adding Your Custom Directives](#adding-custom-directives) section to know how.  
                         
                         ###>`in-el="{selector}"`
@@ -245,7 +232,6 @@
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <u in-el=".article"> <!-- Set the scope -->
                                     <!-- the folowing text will only be appended to the all a[href] inside .article -->
@@ -262,7 +248,6 @@
                     </div>
                     <!-- append-to -->
                     <p class="markdown">
-                        ^^^
                         ###>`append-to="{selector}"`
                         
                         Using the `append-to` directive, you can appended content to elements in the page.  
@@ -270,7 +255,6 @@
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <!-- The <span class="clearfix"> will be append to all <nav> elements in the page -->
                                 <u append-to="nav">
@@ -281,7 +265,6 @@
                     </div>
                     <!-- empty -->
                     <p class="markdown">
-                        ^^^
                         ###>`empty="{selector}"`
                         
                         Using the `empty` directive, you can empty the content of elements on the page.  
@@ -289,7 +272,6 @@
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <!-- this will empty all <p> in the .article on the page -->
                                 <u empty=".article p"></u>
@@ -298,7 +280,6 @@
                     </div>
                     <!-- remove -->
                     <p class="markdown">
-                        ^^^
                         ###>`remove="{selector}"`
                         
                         Using the `remove` directive, you can remove elements from the page.  
@@ -306,7 +287,6 @@
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <!-- this will remove all <ul> in the #menu form the page -->
                                 <u remove="#menu ul"></u>
@@ -315,7 +295,6 @@
                     </div>
                     <!-- markdown -->
                     <p class="markdown">
-                        ^^^
                         ###>`markdown`
                         
                         Using the `markdown` directive, you can write `markdown` instead of `html` for your docs.  
@@ -328,20 +307,17 @@
                         
                         Since having indentation in `markdown` forces the text to be interpreted as code,
                         a new `markdown` feature is added by this directive.  
-                        If a `^^^` is found in your `markdown`, all the indentation will be shifted to the left, as to make the indentation start
-                        where the `^^^` starts.
-                        The `^^^` is removed from the final result.
+                        The directive searches for the first line with text on it, and shift all indentation to the left,
+                        making that the text on that line have 0 indentation.
                     </p>
                     <div class="bs-docs-example">
                         <p class="markdown">
-                            ^^^
                             ```html
                                 <u markdown append-to=".docs">
-                                    ^^^
-                                    ## This wouldn't become an h2 if it weren't for the ^^^ above
+                                    ## This wouldn't become a h2 with the indentation behind it
                                     
-                                    The ^^^ make the indentation start
-                                    RIGHT HERE
+                                    The directives makes the indentation start
+                                    &larr; RIGHT HERE
                                     even though in the source code it's written after 9 level of indentation
                                 </u>
                                 
