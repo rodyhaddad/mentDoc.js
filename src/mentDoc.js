@@ -32,9 +32,14 @@ var mentDoc = (function() {
             forEach(this.el.attributes, function(attr) {
                 if (attr.specified) {
                     var name = attr.name,
-                        value = this.el.getAttribute(name, 3); // 3: IE, case-sens. and String
+                        value = this.el.getAttribute(name, 3), // 3: IE, case-sens. and String
+                        normAttr = mentDoc.normalizeAttr(name);
                         
-                    this.attrs[mentDoc.normalizeAttr(name)] = value;
+                    this.attrs[normAttr] = value;
+                    
+                    if (regDirectives[normAttr] && isFn(regDirectives[normAttr].encounter) {
+                        regDirectives[normAttr].encounter(this.el, value, this);
+                    }
                 }
             }, this);
             
@@ -63,7 +68,9 @@ var mentDoc = (function() {
         
         execute: function() {
             forEach(this._sortedDirectives(), function(commandName) {
-                regDirectives[commandName].execute(this.el, this.attrs[commandName], this);
+                if (isFn(regDirectives[commandName].execute)) {
+                    regDirectives[commandName].execute(this.el, this.attrs[commandName], this);
+                }
             }, this);
             
             this.executeChildren();
@@ -271,7 +278,7 @@ mentDoc.markdown = {
 
 mentDoc.addDirective("markdown", {
     priority: "high",
-    execute: function(el, value, command) {
+    encounter: function(el, value, command) {
         command.getElContent = function() {
             if (!command.data.hasOwnProperty("compiledMarkdown")) {
                 command.data.compiledMarkdown = mentDoc.markdown.convertHtml(
