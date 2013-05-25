@@ -91,7 +91,7 @@
                     <p class="markdown">
                         `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `commands`.  
                     </p>
-                    <section class=".api-mentdoc">
+                    <section class="api-mentdoc">
                         <p class="markdown">
                             <!-- 
                                 mentDoc Object docs
@@ -210,9 +210,9 @@
                             *  `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
                             *  `.updateChildren()` – refreshes the `.children` array. Called by the constructor
                             *  `.executeChildren()` – executes the child `Commands`. Called by `.execute`
-                            *  `._loopThroughEl()` – Used by `.updateChildren()` to iterate through `childNodes`
-                            *  `._sortedDirectives()` – Used by `.execute()` to get a list of directives sorted by their priority
-                            
+                            *  `._loopThroughEl()` – used by `.updateChildren()` to iterate through `childNodes`
+                            *  `._sortedDirectives()` – used by `.execute()` to get a list of directives sorted by their priority
+                            *  `Command.isCommandEl(el)` – a static method that returns true if the `el` represents a `Command` element
                             
                             
                         </p>
