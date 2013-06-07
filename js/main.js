@@ -1,4 +1,4 @@
-$(".markdown").each(function() {
+$(".markdown").each(function () {
     var content = $(this).html(),
         html = mentDoc.markdown.convertHtml(content);
 
@@ -11,6 +11,6 @@ $(".markdown").each(function() {
     $(this).empty().html(html);
 });
 
-$(".mentDoc").each(function() {
+$(".mentDoc").each(function () {
     mentDoc.compile(this.innerHTML).execute();
 });

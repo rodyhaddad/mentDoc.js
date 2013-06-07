@@ -1,443 +1,480 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
     <!--[if IE 7]>
     <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen"/>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>MentDoc.js by rodyhaddad</title>
-  </head>
+</head>
 
-  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
 
-    <header class="hero-unit" id="main-header">
-        <div class="container">
-            <h1>
-                MentDoc.js
-            </h1>
-
-            <p>A library that allows third-party coders to augment the documentation of your project</p>
-
-            <p class="btn-group">
-                <a class="btn" href="https://raw.github.com/rodyhaddad/mentDoc.js/master/src/mentDoc.js">
-                    <i class="icon-file-alt"></i> Raw File
-                </a>
-                <a class="btn btn-primary" href="https://github.com/rodyhaddad/mentDoc.js"><i class="icon-github icon-white"></i> Code on Github</a>
-                <a class="btn" href="https://github.com/rodyhaddad/mentDoc.js/zipball/master"><i class="icon-download-alt"></i> Download zip</a>
-            </p>
-        </div>
-    </header>
-
+<header class="hero-unit" id="main-header">
     <div class="container">
-        <div class="row">
-            <div class="span3">
-                <div class="bs-docs-sidebar">
-                    <ul class="nav nav-list bs-docs-sidenav"  data-spy="affix" data-offset-top="249">
-                        <li style="display: none"><a href="#main-header">Top</a></li>
-                        <li class="first"><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
-                        <li><a href="#usage-api"><i class="icon-chevron-right"></i> Usage API</a></li>
-                        <li><a href="#default-directives"><i class="icon-chevron-right"></i> Default Directives</a></li>
-                        <li class="last"><a href="#adding-custom-directives"><i class="icon-chevron-right"></i> Adding Your Custom Directives</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="span9 main-content">
-                <section id="overview">
-                    <div class="page-header">
-                        <h1>Overview</h1>
-                    </div>
-                    <p class="markdown">
-                        This is a javascript library which aims at improving your project's documentation.
+        <h1>
+            MentDoc.js
+        </h1>
 
-                        If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of your plugins in one place.
-                        This will make navigating your plugins' docs much easier, since they would be all on the same site.
-                    </p>
-                    <p class="markdown">
-                        `mentDoc.js` allows you to `compile` some html and then `execute` it.
-                        The html can have `commands` with `directives` in it, which can manipulate the page they're being executed in.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <!-- in your page -->
-                                <span class="example1">Test: </span>
+        <p>A library that allows third-party coders to augment the documentation of your project</p>
 
-                                <!-- plugin's docs -->
-                                <u append-to=".example1">
-                                    This will be appended to ".example1" once executed
-                                </u>
-                            ```
-                        </p>
-                        <span class="badge badge-info">This is a live demo of the above example</span> <span class="example1">Test: </span>
-                        <div class="mentDoc">
-                            <u append-to=".example1">
-                                This will be appended to ".example1" once executed
-                            </u>
-                        </div>
-                    </div>
-                </section>
-                <section id="usage-api">
-                    <div class="page-header">
-                        <h1>Usage API</h1>
-                    </div>
-                    <p class="markdown">
-                        `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `Commands`.
-                        You can then your execute those `Commands` using their public API.
+        <p class="btn-group">
+            <a class="btn" href="https://raw.github.com/rodyhaddad/mentDoc.js/master/src/mentDoc.js">
+                <i class="icon-file-alt"></i> Raw File
+            </a>
+            <a class="btn btn-primary" href="https://github.com/rodyhaddad/mentDoc.js"><i
+                    class="icon-github icon-white"></i> Code on Github</a>
+            <a class="btn" href="https://github.com/rodyhaddad/mentDoc.js/zipball/master"><i
+                    class="icon-download-alt"></i> Download zip</a>
+        </p>
+    </div>
+</header>
 
-                        The following sections detail all the methods and properties you have access to.
-                        If you're going to just use mentDoc, just read `mentDoc.compile` and `Command.execute()` in the API section
-                        If you want to develop plugins for mentDoc, read everything (though you can skip the `other` section)
-                    </p>
-                    <section id="api-mentdoc">
-                        <p class="markdown">
-                            <!--
-                                mentDoc Object docs
-                            -->
-                            ## mentDoc
+<div class="container">
+<div class="row">
+<div class="span3">
+    <div class="bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav" data-spy="affix" data-offset-top="249">
+            <li style="display: none"><a href="#main-header">Top</a></li>
+            <li class="first"><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
+            <li><a href="#usage-api"><i class="icon-chevron-right"></i> Usage API</a></li>
+            <li><a href="#default-directives"><i class="icon-chevron-right"></i> Default Directives</a></li>
+            <li class="last"><a href="#adding-custom-directives"><i class="icon-chevron-right"></i> Adding Your Custom
+                Directives</a></li>
+        </ul>
+    </div>
+</div>
+<div class="span9 main-content">
+<section id="overview">
+    <div class="page-header">
+        <h1>Overview</h1>
+    </div>
+    <p class="markdown">
+        This is a javascript library which aims at improving your project's documentation.
 
-                            ###> `mentDoc.compile( html )`
+        If you're writing a library that can have plugins, using `mentDoc.js`, you can have all the documentation of
+        your plugins in one place.
+        This will make navigating your plugins' docs much easier, since they would be all on the same site.
+    </p>
 
-                            Using this method, you can compile some `html`, which will return you a `Command` object.
-                            You can then execute that `Command` object as many times as you want.
+    <p class="markdown">
+        `mentDoc.js` allows you to `compile` some html and then `execute` it.
+        The html can have `commands` with `directives` in it, which can manipulate the page they're being executed in.
+    </p>
 
-                        </p>
-                        <div class="bs-docs-example">
-                            <p class="markdown">
-                            ```js
-                                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
-                            ```
-                            </p>
-                        </div>
-                        <p class="markdown">
-                            ##### Parameters:
-                            *  html – {String} – The `html` to parse and extract `commands` of.
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <!-- in your page -->
+            <span class="example1">Test: </span>
 
-                            ##### Returns:
-                            *  {Command} – a root `Command` that you can execute.
+            <!-- plugin's docs -->
+            <u append-to=".example1">
+                This will be appended to ".example1" once executed
+            </u>
+            ```
+        </p>
+        <span class="badge badge-info">This is a live demo of the above example</span> <span
+            class="example1">Test: </span>
 
-
-                            ###> `other`
-                            A list of all other properties/methods on the `mentDoc` object, if you're curious:
-
-                            *  `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the [Adding Your Custom Directives](#adding-custom-directives) section
-                            *  `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns `someAttr`.
-                            *  `.Command(el, parent)` – the `Command` class
-                            *  `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
-                            *  `.isArray(obj)` – returns whether `obj` is an array
-                            *  `.isObject(obj)` – returns whether `obj` is an object. Doesn't include `null`
-                            *  `.isFn(fn)` – returns whether `fn` is a function
-                            *  `.makeInherit(obj)` – same thing as ES5's `Object.create(obj)`
-                            *  `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
-                            *  `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
-
-                            - - -
-                        </p>
-                    </section>
-                    <section id="api-command">
-                        <p class="markdown">
-                            <!--
-                                Command Class docs
-                            -->
-                            ##Command
-
-                            `Command` is a class which represents a `u` element.
-
-                            When some `html` is being compiled, each time a `u` element is encountered a new `Command` instance is created.
-
-
-                            ###> `.execute()`
-
-                            Executes the directives that were set on the `u` element, as well as any child `Command`
-
-                        </p>
-                        <div class="bs-docs-example">
-                            <p class="markdown">
-                            ```js
-                                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
-                                rootCommand.execute(); //this will append the text above to the body
-                            ```
-                            </p>
-                        </div>
-                        <p class="markdown">
-                            ##### Returns:
-                            *  {Command} – itself, for chaining.
-
-
-                            ###> `.el`
-
-                            The `DOM` element that this `Command` instance represents.
-
-                            ###> `.parent`
-
-                            The parent `Command` of the current `Command`.
-
-                            <span class="badge">Note</span> This is NOT the `DOM parentNode`, but the parent `Command`: Independently of how many `DOM parentNodes` separate them.
-
-                            ###> `.attrs`
-
-                            A normalized list of the attributes specified on the `.el`.
-                            Any `data-` or `x-` is removed from the attribute name, and is transformed to camelCase.
-                            The `key` is the attribute `name`, and the `value` is the attribute `value`.
-
-                        </p>
-                        <div class="bs-docs-example">
-                            <p class="markdown">
-                            ```js
-                                aCommand.attrs["appendTo"] === "body";
-                            ```
-                            </p>
-                        </div>
-                        <p class="markdown">
-                            ###> `.children`
-
-                            An array of child `Commands`.
-
-                            <span class="badge">Note</span> This is NOT the `DOM childNodes`, but the child `Commands`: Independently of how many `DOM childNodes` separate them.
-
-                            ###> `.data`
-
-                            An object in which directives can store any data they want.
-
-                            <span class="badge">Note</span> `.data` prototypically inherits from `.parent.data`, so anything set on the parent's `.data` will be accessible from child `Commands`.
-
-                            ###> `other`
-                            A list of all other properties/methods on the `Command` object and its instances, if you're curious:
-
-                            *  `.isRoot` – a boolean indicating whether this `Command` is a root command or not
-                            *  `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
-                            *  `.updateChildren()` – refreshes the `.children` array. Called by the constructor
-                            *  `.executeChildren()` – executes the child `Commands`. Called by `.execute`
-                            *  `._loopThroughEl()` – used by `.updateChildren()` to iterate through `childNodes`
-                            *  `._sortedDirectives()` – used by `.execute()` to get a list of directives sorted by their priority
-                            *  `Command.isCommandEl(el)` – a static method that returns true if the `el` represents a `Command` element
-
-
-                        </p>
-                    </section>
-                </section>
-                <section id="default-directives">
-                    <div class="page-header">
-                        <h1>Default Directives</h1>
-                    </div>
-                    <!-- in-el -->
-                    <p class="markdown">
-                        Here is a list of the directives that are bundled in `mentDoc.js` by default. You can always overwrite them or add your own if you want to, simply read the [Adding Your Custom Directives](#adding-custom-directives) section to know how.
-
-                        ###> `in-el="{selector}"`
-
-                        Using the `in-el` directive, you can specify the context of all DOM manipulations that occur inside the element.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <u in-el=".article"> <!-- Set the scope -->
-                                    <!-- the folowing text will only be appended to the all a[href] inside .article -->
-                                    <u append-to="a[href]">
-                                        [external]
-                                    </u>
-                                </u>
-                                <!-- while the following <span> will be appended to all nav elements in the page -->
-                                <u append-to="nav">
-                                    <span class="clearfix"></span>
-                                </u>
-                            ```
-                        </p>
-                    </div>
-                    <!-- append-to -->
-                    <p class="markdown">
-                        ###> `append-to="{selector}"`
-
-                        Using the `append-to` directive, you can appended content to elements in the page.
-                        You may specify the scope using the `in-el` directive.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <!-- The <span class="clearfix"> will be append to all <nav> elements in the page -->
-                                <u append-to="nav">
-                                    <span class="clearfix"></span>
-                                </u>
-                            ```
-                        </p>
-                    </div>
-                    <!-- empty -->
-                    <p class="markdown">
-                        ###> `empty="{selector}"`
-
-                        Using the `empty` directive, you can empty the content of elements on the page.
-                        You may specify the scope using the `in-el` directive.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <!-- this will empty all <p> in the .article on the page -->
-                                <u empty=".article p"></u>
-                            ```
-                        </p>
-                    </div>
-                    <!-- remove -->
-                    <p class="markdown">
-                        ###> `remove="{selector}"`
-
-                        Using the `remove` directive, you can remove elements from the page.
-                        You may specify the scope using the `in-el` directive.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <!-- this will remove all <ul> in the #menu form the page -->
-                                <u remove="#menu ul"></u>
-                            ```
-                        </p>
-                    </div>
-                    <!-- markdown -->
-                    <p class="markdown">
-                        ###> `markdown`
-
-                        Using the `markdown` directive, you can write `markdown` instead of `html` for your docs.
-
-                        This directives uses [PageDown](https://code.google.com/p/pagedown/) to convert `markdown` to `html`
-                        It also uses [PageDown's Sanitizer](https://code.google.com/p/pagedown/source/browse/Markdown.Sanitizer.js),
-                        as well as [PageDown Extra](https://github.com/jmcmanus/pagedown-extra) for awesome goodness.
-                        It also assumes you have [Google Code Prettify](https://code.google.com/p/google-code-prettify/) if you ever
-                        want to use \`\`\` for code blocks in your `markdown`
-
-                        Since having indentation in `markdown` forces the text to be interpreted as code,
-                        a new `markdown` feature is added by this directive.
-                        The directive searches for the first line with text on it, and shift all indentation to the left,
-                        making that the text on that line have 0 indentation.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```html
-                                <u markdown append-to=".docs">
-                                    ## This wouldn't become a h2 with the indentation behind it
-
-                                    The directives makes the indentation start
-                                    &larr; RIGHT HERE
-                                    even though in the source code it's written after 9 level of indentation
-                                </u>
-
-                            ```
-                        </p>
-                    </div>
-                    <div class="mentDoc">
-                        <ul you append-to="#api-mentdoc ul">
-                            <li you markdown>`.markdown.convertHtml(markdown)` – Added by the `markdown` directive, it converts `markdown` to `html`</li>
-                        </ul>
-                    </div>
-                    <p class="markdown">
-                        <span class="badge badge-info">Live demo</span> `mentDoc.markdown.convertHtml(markdown)`
-                        is defined by this directive's code. So I decided to write a `mentDoc` document, compile it, and execute it.
-                    </p>
-                        <div class="bs-docs-example">
-                            <div class="markdown">
-                                ```html
-                                    <!-- This mentDoc document is written just these lines of code -->
-                                    <ul you append-to="#api-mentdoc ul">
-                                        <li you markdown>`.markdown.convertHtml(markdown)` – Added by the `markdown` directive, it [...]</li>
-                                    </ul>
-
-                                ```
-                            </div>
-                        </div>
-                    <p class="markdown">
-                        This means that if I remove this section that covers the `markdown` directive, the documentation of
-                        `mentDoc.markdown.convertHtml(markdown)` is removed automatically from way up there.
-                    </p>
-                </section>
-                <section id="adding-custom-directives">
-                    <div class="page-header">
-                        <h1>Adding Your Custom Directives</h1>
-                    </div>
-                    <p class="markdown">
-                        Just like the `append-to="..."` and the `markdown` directives are included by default in `mentDoc`, you can add your own custom directives.
-
-                        To do so, you will need to use the `mentDoc.addDirective(name, info)` method.
-                        For a more detailed documentation of the parameters passed to `.addDirective`:
-
-                        ###> `name`
-                        {String} – The normalized name of your directive, in `camelCase`.
-                        Example: if you want your directive to be invoked with a `append-to` attribute in html,
-                        then pass in `appendTo` as a `name`.
-
-                        ###> `info`
-                        {Object|Function} – The info related to the directive.
-                        If an Object is passed, than it can have any of these properties:
-
-                        *  priority _(default:`"default"`)_ – {Number|String} – the priority of the directive for when the `Command` is executed.
-                           A directive with a priority of `1` gets executed before a directive with a directive of `2`.
-                           Instead of passing a number, you can pass one of the following Strings:
-                           -  `"high"` – equivalent to `10`
-                           -  `"medium"` – equivalent to `20`
-                           -  `"low"` – equivalent to `30`
-                           -  `"default"` – equivalent to `30`
-
-                           <span class="badge">Use Case</span> `priority` makes sure that `empty` always gets executed before `append-to`.
-
-                        *  execute(el, value, command) _(optional)_ – (Function) – a function that gets called every time the `Command` get executed.
-                           The function is passed the following parameters:
-                           -  `el` – the `DOM` element the directive was set on
-                           -  `value` – the value of the attribute the directive is associated with
-                           -  `command` – the `Command` object the directive is associated with. (See the `Command`[ API section](#api-command))
-
-                        *  encounter(el, value, command) _(optional)_ – (Function) – a function that gets called every time the directive is encountered during compilation process.
-                           The function is passed the following parameters:
-                           -  `el` – the `DOM` element the directive was encountered on
-                           -  `value` – the value of the attribute the directive is associated with
-                           -  `command` – the `Command` object the directive is associated with. (See the `Command`[ API section](#api-command))
-
-                           <span class="badge">Note</span> The `command` would probably not be fully formed since `.encounter` is called in the `compile` process
-
-                        Passing a Function is a shorthand for passing an object with just an `execute` property.
-                    </p>
-                    <div class="bs-docs-example">
-                        <p class="markdown">
-                            ```js
-                                mentDoc.addDirective("yourCustomDirective", {
-                                    execute: function(el, value, command) {
-                                        //...
-                                    }
-                                });
-                                // EQUIVALENT TO:
-                                mentDoc.addDirective("yourCustomDirective", function(el, value, command) {
-                                    //...
-                                });
-
-                            ```
-                        </p>
-                    </div>
-                </section>
-            </div>
+        <div class="mentDoc">
+            <u append-to=".example1">
+                This will be appended to ".example1" once executed
+            </u>
         </div>
     </div>
+</section>
+<section id="usage-api">
+    <div class="page-header">
+        <h1>Usage API</h1>
+    </div>
+    <p class="markdown">
+        `mentDoc.js` exposes a global variable called `mentDoc`, which you can use do compile html into `Commands`.
+        You can then your execute those `Commands` using their public API.
 
-    <footer class="footer">
-        <p>
-            mentDoc.js is maintained by <a href="https://twitter.com/rodyhaddad">rodyhaddad</a>
-        </p>
-        <p>
-            Code licensed under <a href="https://github.com/rodyhaddad/mentDoc.js/blob/master/LICENSE">MIT License</a>.
-        </p>
-        <p>
-            Found a bug? Report it <a href="https://github.com/rodyhaddad/mentDoc.js/issues">here</a>
-        </p>
-    </footer>
+        The following sections detail all the methods and properties you have access to.
+        If you're going to just use mentDoc, just read `mentDoc.compile` and `Command.execute()` in the API section
+        If you want to develop plugins for mentDoc, read everything (though you can skip the `other` section)
+    </p>
+    <section id="api-mentdoc">
+        <p class="markdown">
+            <!--
+                mentDoc Object docs
+            -->
+            ## mentDoc
 
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/Markdown-mentDoc.min.js"></script>
-    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
-    <script src="js/main.js"></script>
+            ###> `mentDoc.compile( html )`
 
-  </body>
+            Using this method, you can compile some `html`, which will return you a `Command` object.
+            You can then execute that `Command` object as many times as you want.
+
+        </p>
+
+        <div class="bs-docs-example">
+            <p class="markdown">
+                ```js
+                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                ```
+            </p>
+        </div>
+        <p class="markdown">
+            ##### Parameters:
+            * html – {String} – The `html` to parse and extract `commands` of.
+
+            ##### Returns:
+            * {Command} – a root `Command` that you can execute.
+
+
+            ###> `other`
+            A list of all other properties/methods on the `mentDoc` object, if you're curious:
+
+            * `.addDirective(name, info)` – a method that allows you to add custom directives, more details in the
+            [Adding Your Custom Directives](#adding-custom-directives) section
+            * `.normalizeAttr(name)` – a method that normalizes attributes. Given `data-some-attr`, it returns
+            `someAttr`.
+            * `.Command(el, parent)` – the `Command` class
+            * `.forEach(obj, iterator, context)` – allows you to iterate through an array or object
+            * `.isArray(obj)` – returns whether `obj` is an array
+            * `.isObject(obj)` – returns whether `obj` is an object. Doesn't include `null`
+            * `.isFn(fn)` – returns whether `fn` is a function
+            * `.makeInherit(obj)` – same thing as ES5's `Object.create(obj)`
+            * `.priorityAlias` – an object used for priority aliasing, where `high` priority is stored to be `10`
+            * `.regDirectives` – an object holding all registered directives (key: name => value: directiveInfo)
+
+            - - -
+        </p>
+    </section>
+    <section id="api-command">
+        <p class="markdown">
+            <!--
+                Command Class docs
+            -->
+            ##Command
+
+            `Command` is a class which represents a `u` element.
+
+            When some `html` is being compiled, each time a `u` element is encountered a new `Command` instance is
+            created.
+
+
+            ###> `.execute()`
+
+            Executes the directives that were set on the `u` element, as well as any child `Command`
+
+        </p>
+
+        <div class="bs-docs-example">
+            <p class="markdown">
+                ```js
+                var rootCommand = mentDoc.compile('<u append-to="body">Will be appended once executed</u>');
+                rootCommand.execute(); //this will append the text above to the body
+                ```
+            </p>
+        </div>
+        <p class="markdown">
+            ##### Returns:
+            * {Command} – itself, for chaining.
+
+
+            ###> `.el`
+
+            The `DOM` element that this `Command` instance represents.
+
+            ###> `.parent`
+
+            The parent `Command` of the current `Command`.
+
+            <span class="badge">Note</span> This is NOT the `DOM parentNode`, but the parent `Command`: Independently of
+            how many `DOM parentNodes` separate them.
+
+            ###> `.attrs`
+
+            A normalized list of the attributes specified on the `.el`.
+            Any `data-` or `x-` is removed from the attribute name, and is transformed to camelCase.
+            The `key` is the attribute `name`, and the `value` is the attribute `value`.
+
+        </p>
+
+        <div class="bs-docs-example">
+            <p class="markdown">
+                ```js
+                aCommand.attrs["appendTo"] === "body";
+                ```
+            </p>
+        </div>
+        <p class="markdown">
+            ###> `.children`
+
+            An array of child `Commands`.
+
+            <span class="badge">Note</span> This is NOT the `DOM childNodes`, but the child `Commands`: Independently of
+            how many `DOM childNodes` separate them.
+
+            ###> `.data`
+
+            An object in which directives can store any data they want.
+
+            <span class="badge">Note</span> `.data` prototypically inherits from `.parent.data`, so anything set on the
+            parent's `.data` will be accessible from child `Commands`.
+
+            ###> `other`
+            A list of all other properties/methods on the `Command` object and its instances, if you're curious:
+
+            * `.isRoot` – a boolean indicating whether this `Command` is a root command or not
+            * `.refreshAttrs()` – refreshes the `.attrs` object. Called by the constructor
+            * `.updateChildren()` – refreshes the `.children` array. Called by the constructor
+            * `.executeChildren()` – executes the child `Commands`. Called by `.execute`
+            * `._loopThroughEl()` – used by `.updateChildren()` to iterate through `childNodes`
+            * `._sortedDirectives()` – used by `.execute()` to get a list of directives sorted by their priority
+            * `Command.isCommandEl(el)` – a static method that returns true if the `el` represents a `Command` element
+
+
+        </p>
+    </section>
+</section>
+<section id="default-directives">
+    <div class="page-header">
+        <h1>Default Directives</h1>
+    </div>
+    <!-- in-el -->
+    <p class="markdown">
+        Here is a list of the directives that are bundled in `mentDoc.js` by default. You can always overwrite them or
+        add your own if you want to, simply read the [Adding Your Custom Directives](#adding-custom-directives) section
+        to know how.
+
+        ###> `in-el="{selector}"`
+
+        Using the `in-el` directive, you can specify the context of all DOM manipulations that occur inside the element.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <u in-el=".article"> <!-- Set the scope -->
+                <!-- the folowing text will only be appended to the all a[href] inside .article -->
+                <u append-to="a[href]">
+                    [external]
+                </u>
+            </u>
+            <!-- while the following <span> will be appended to all nav elements in the page -->
+            <u append-to="nav">
+                <span class="clearfix"></span>
+            </u>
+            ```
+        </p>
+    </div>
+    <!-- append-to -->
+    <p class="markdown">
+        ###> `append-to="{selector}"`
+
+        Using the `append-to` directive, you can appended content to elements in the page.
+        You may specify the scope using the `in-el` directive.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <!-- The <span class="clearfix"> will be append to all <nav> elements in the page -->
+            <u append-to="nav">
+                <span class="clearfix"></span>
+            </u>
+            ```
+        </p>
+    </div>
+    <!-- empty -->
+    <p class="markdown">
+        ###> `empty="{selector}"`
+
+        Using the `empty` directive, you can empty the content of elements on the page.
+        You may specify the scope using the `in-el` directive.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <!-- this will empty all <p> in the .article on the page -->
+            <u empty=".article p"></u>
+            ```
+        </p>
+    </div>
+    <!-- remove -->
+    <p class="markdown">
+        ###> `remove="{selector}"`
+
+        Using the `remove` directive, you can remove elements from the page.
+        You may specify the scope using the `in-el` directive.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <!-- this will remove all <ul> in the #menu form the page -->
+            <u remove="#menu ul"></u>
+            ```
+        </p>
+    </div>
+    <!-- markdown -->
+    <p class="markdown">
+        ###> `markdown`
+
+        Using the `markdown` directive, you can write `markdown` instead of `html` for your docs.
+
+        This directives uses [PageDown](https://code.google.com/p/pagedown/) to convert `markdown` to `html`
+        It also uses [PageDown's Sanitizer](https://code.google.com/p/pagedown/source/browse/Markdown.Sanitizer.js),
+        as well as [PageDown Extra](https://github.com/jmcmanus/pagedown-extra) for awesome goodness.
+        It also assumes you have [Google Code Prettify](https://code.google.com/p/google-code-prettify/) if you ever
+        want to use \`\`\` for code blocks in your `markdown`
+
+        Since having indentation in `markdown` forces the text to be interpreted as code,
+        a new `markdown` feature is added by this directive.
+        The directive searches for the first line with text on it, and shift all indentation to the left,
+        making that the text on that line have 0 indentation.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```html
+            <u markdown append-to=".docs">
+                ## This wouldn't become a h2 with the indentation behind it
+
+                The directives makes the indentation start
+                &larr; RIGHT HERE
+                even though in the source code it's written after 9 level of indentation
+            </u>
+
+            ```
+        </p>
+    </div>
+    <div class="mentDoc">
+        <ul you append-to="#api-mentdoc ul">
+            <li you markdown>`.markdown.convertHtml(markdown)` – Added by the `markdown` directive, it converts
+                `markdown` to `html`
+            </li>
+        </ul>
+    </div>
+    <p class="markdown">
+        <span class="badge badge-info">Live demo</span> `mentDoc.markdown.convertHtml(markdown)`
+        is defined by this directive's code. So I decided to write a `mentDoc` document, compile it, and execute it.
+    </p>
+
+    <div class="bs-docs-example">
+        <div class="markdown">
+            ```html
+            <!-- This mentDoc document is written just these lines of code -->
+            <ul you append-to="#api-mentdoc ul">
+                <li you markdown>`.markdown.convertHtml(markdown)` – Added by the `markdown` directive, it [...]</li>
+            </ul>
+
+            ```
+        </div>
+    </div>
+    <p class="markdown">
+        This means that if I remove this section that covers the `markdown` directive, the documentation of
+        `mentDoc.markdown.convertHtml(markdown)` is removed automatically from way up there.
+    </p>
+</section>
+<section id="adding-custom-directives">
+    <div class="page-header">
+        <h1>Adding Your Custom Directives</h1>
+    </div>
+    <p class="markdown">
+        Just like the `append-to="..."` and the `markdown` directives are included by default in `mentDoc`, you can add
+        your own custom directives.
+
+        To do so, you will need to use the `mentDoc.addDirective(name, info)` method.
+        For a more detailed documentation of the parameters passed to `.addDirective`:
+
+        ###> `name`
+        {String} – The normalized name of your directive, in `camelCase`.
+        Example: if you want your directive to be invoked with a `append-to` attribute in html,
+        then pass in `appendTo` as a `name`.
+
+        ###> `info`
+        {Object|Function} – The info related to the directive.
+        If an Object is passed, than it can have any of these properties:
+
+        * priority _(default:`"default"`)_ – {Number|String} – the priority of the directive for when the `Command` is
+        executed.
+        A directive with a priority of `1` gets executed before a directive with a directive of `2`.
+        Instead of passing a number, you can pass one of the following Strings:
+        - `"high"` – equivalent to `10`
+        - `"medium"` – equivalent to `20`
+        - `"low"` – equivalent to `30`
+        - `"default"` – equivalent to `30`
+
+        <span class="badge">Use Case</span> `priority` makes sure that `empty` always gets executed before `append-to`.
+
+        * execute(el, value, command) _(optional)_ – (Function) – a function that gets called every time the `Command`
+        get executed.
+        The function is passed the following parameters:
+        - `el` – the `DOM` element the directive was set on
+        - `value` – the value of the attribute the directive is associated with
+        - `command` – the `Command` object the directive is associated with. (See the `Command`[ API
+        section](#api-command))
+
+        * encounter(el, value, command) _(optional)_ – (Function) – a function that gets called every time the directive
+        is encountered during compilation process.
+        The function is passed the following parameters:
+        - `el` – the `DOM` element the directive was encountered on
+        - `value` – the value of the attribute the directive is associated with
+        - `command` – the `Command` object the directive is associated with. (See the `Command`[ API
+        section](#api-command))
+
+        <span class="badge">Note</span> The `command` would probably not be fully formed since `.encounter` is called in
+        the `compile` process
+
+        Passing a Function is a shorthand for passing an object with just an `execute` property.
+    </p>
+
+    <div class="bs-docs-example">
+        <p class="markdown">
+            ```js
+            mentDoc.addDirective("yourCustomDirective", {
+            execute: function(el, value, command) {
+            //...
+            }
+            });
+            // EQUIVALENT TO:
+            mentDoc.addDirective("yourCustomDirective", function(el, value, command) {
+            //...
+            });
+
+            ```
+        </p>
+    </div>
+</section>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+    <p>
+        mentDoc.js is maintained by <a href="https://twitter.com/rodyhaddad">rodyhaddad</a>
+    </p>
+
+    <p>
+        Code licensed under <a href="https://github.com/rodyhaddad/mentDoc.js/blob/master/LICENSE">MIT License</a>.
+    </p>
+
+    <p>
+        Found a bug? Report it <a href="https://github.com/rodyhaddad/mentDoc.js/issues">here</a>
+    </p>
+</footer>
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/Markdown-mentDoc.min.js"></script>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+<script src="js/main.js"></script>
+
+</body>
 </html>
             
